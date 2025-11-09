@@ -1,18 +1,22 @@
 import React from "react";
+import { FaFire, FaWifi } from "react-icons/fa";
+import { GiElectric } from "react-icons/gi";
+import { IoIosWater } from "react-icons/io";
+import { IoWaterOutline } from "react-icons/io5";
+import { RiFireLine } from "react-icons/ri";
 import styled from "styled-components";
 const StyledWrapper = styled.div`
   .card {
-    width: 300px;
     padding: 20px;
-    background: #fff;
-    border: 6px solid #000;
-    box-shadow: 12px 12px 0 #000;
+    background: #dad7cd;
+    border: 6px solid #a3b18a;
+    box-shadow: 12px 12px 0 #132a13;
     transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .card:hover {
     transform: translate(-5px, -5px);
-    box-shadow: 17px 17px 0 #000;
+    box-shadow: 17px 17px 0 #132a13;
   }
 
   .card__title {
@@ -43,73 +47,10 @@ const StyledWrapper = styled.div`
   }
 
   .card__content {
-    font-size: 16px;
+    font-size: 16px
     line-height: 1.4;
     color: #000;
     margin-bottom: 20px;
-  }
-
-  .card__form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .card__form input {
-    padding: 10px;
-    border: 3px solid #000;
-    font-size: 16px;
-    font-family: inherit;
-    transition: transform 0.3s;
-    width: calc(100% - 26px); /* Adjust for padding and border */
-  }
-
-  .card__form input:focus {
-    outline: none;
-    transform: scale(1.05);
-    background-color: #000;
-    color: #ffffff;
-  }
-
-  .card__button {
-    border: 3px solid #000;
-    background: #000;
-    color: #fff;
-    padding: 10px;
-    font-size: 18px;
-    left: 20%;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-    width: 50%;
-    height: 100%;
-  }
-
-  .card__button::before {
-    content: "Sure?";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 105%;
-    background-color: #5ad641;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(100%);
-    transition: transform 0.3s;
-  }
-
-  .card__button:hover::before {
-    transform: translateY(0);
-  }
-
-  .card__button:active {
-    transform: scale(0.95);
   }
 
   @keyframes glitch {
@@ -143,24 +84,63 @@ const Categories = () => {
           Categories
         </h2>
       </div>
-      <p>
+      <p className="text-center mt-5 text-xl">
         Manage all your essential utility services in one convenient location
       </p>
       {/* All Cards */}
-      <div className="mt-12">
-        <StyledWrapper>
-          <div className="card">
-            <span className="card__title">Newsletter</span>
-            <p className="card__content">
-              Get existential crisis delivered straight to your inbox every
-              week.
-            </p>
-            <form className="card__form">
-              <input required type="email" placeholder="Your life" />
-              <button className="card__button">Click me</button>
-            </form>
-          </div>
-        </StyledWrapper>
+      <div className="mt-12 grid grid-cols-4 justify-around gap-20">
+        <div>
+          <StyledWrapper>
+            <div className="card">
+              <span className="card__title">Electricity</span>
+              <div className="flex justify-center">
+                <GiElectric size={70} color="black" />
+              </div>
+              <p className="card__content mt-6">
+                Manage your Electricity bills and consumption with ease.
+              </p>
+            </div>
+          </StyledWrapper>
+        </div>
+        <div>
+          <StyledWrapper>
+            <div className="card">
+              <span className="card__title">Gas</span>
+              <div className="flex justify-center">
+                <RiFireLine size={70} color="black" />
+              </div>
+              <p className="card__content mt-6">
+                Track your gas utility expenses and usage.
+              </p>
+            </div>
+          </StyledWrapper>
+        </div>
+        <div>
+          <StyledWrapper>
+            <div className="card">
+              <span className="card__title">Water</span>
+              <div className="flex justify-center">
+                <IoWaterOutline size={70} color="black" />
+              </div>
+              <p className="card__content mt-6">
+                Monitor water usage and billing services.
+              </p>
+            </div>
+          </StyledWrapper>
+        </div>
+        <div>
+          <StyledWrapper>
+            <div className="card">
+              <span className="card__title">Electricity</span>
+              <div className="flex justify-center">
+                <FaWifi size={70} color="black" />
+              </div>
+              <p className="card__content mt-6">
+                Manage internet service payments.
+              </p>
+            </div>
+          </StyledWrapper>
+        </div>
       </div>
     </div>
   );
