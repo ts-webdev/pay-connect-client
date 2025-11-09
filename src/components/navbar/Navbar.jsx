@@ -1,38 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { use } from "react";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
+import "./navbar.css";
+import { AuthContext } from "../../authContext/AuthContext";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const { user, logOut, theme, setTheme } = use(AuthContext);
 
   // links
   const links = (
     <>
       <li>
-        <Link to={"/"}>Home</Link>
+        <NavLink className={"rounded-full btn btn-ghost"} to={"/"}>
+          Home
+        </NavLink>
       </li>
       <li>
-        <Link to={"/bills"}>Bills</Link>
+        <NavLink className={"rounded-full btn btn-ghost"} to={"/bills"}>
+          Bills
+        </NavLink>
       </li>
-      <li>
-        <Link to={"/login"}>Login</Link>
-      </li>
-      <li>
-        <Link to={"/register"}>Register</Link>
-      </li>
+      {user && (
+        <li>
+          <NavLink className={"rounded-full btn btn-ghost"} to={"/login"}>
+            My Pay Bills
+          </NavLink>
+        </li>
+      )}
     </>
   );
-
-  // get theme from local storage
-  useEffect(()=>{
-    document.querySelector("html").setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme])
 
   // handle theme change
   const handleTheme = (isChecked) => {
     setTheme(isChecked ? "dark" : "light");
-  }
+  };
+
+  const handleSignOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="sticky top-0 z-100 pt-5">
       <div className="navbar container mx-auto">
@@ -79,18 +88,24 @@ const Navbar = () => {
             </ul>
           </div>
           {/* logo */}
-          <Link to={"/"} className="text-3xl flex items-end font-bold cursor-pointer">
-            <img className="h-10" src={logo} alt="" /><span className="-ml-1.5">ayConnect</span>
+          <Link
+            to={"/"}
+            className="text-3xl flex items-end font-bold cursor-pointer"
+          >
+            <img className="h-10" src={logo} alt="" />
+            <span className="-ml-1.5">ayConnect</span>
           </Link>
         </div>
         <div className="navbar-end">
-          <ul className="menu menu-horizontal px-1 hidden lg:flex">{links}</ul>
+          <ul className="menu menu-horizontal px-1 hidden lg:flex gap-3">
+            {links}
+          </ul>
           <label className="swap swap-rotate mr-2">
             {/* this hidden checkbox controls the state */}
             <input
-            onChange={(e)=>handleTheme(e.target.checked)}
+              onChange={(e) => handleTheme(e.target.checked)}
               type="checkbox"
-              className="theme-controller"
+              className="theme-controller mr-10"
               defaultChecked={theme === "dark"}
             />
 
@@ -112,8 +127,33 @@ const Navbar = () => {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
           </label>
-          <a className="btn btn-outline rounded-full">Login</a>
-          <a className="btn btn-primary rounded-full ml-3">Register</a>
+          {user ? (
+            <Link
+              onClick={handleSignOut}
+              className="btn btn-outline  rounded-full"
+            >
+              Logout
+            </Link>
+          ) : (
+            <div>
+              <NavLink to={"/login"} className="btn btn-outline  rounded-full">
+                Login
+              </NavLink>
+              <NavLink
+                to={"register"}
+                className="btn btn-outline rounded-full ml-3"
+              >
+                Register
+              </NavLink>
+            </div>
+          )}
+          {user && (
+            <div className="avatar avatar-online ">
+              <div className="w-11 ml-3 rounded-full ring-primary ring-2">
+                <img src={user.photoURL} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

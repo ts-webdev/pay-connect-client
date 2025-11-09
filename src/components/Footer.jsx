@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <section className="bg-base-300 z-50">
+    <section className="bg-[#081c15] z-50">
       <footer className="container mx-auto footer sm:footer-horizontal  text-base-content p-10">
         <nav>
           <h6 className="footer-title">Services</h6>
@@ -57,7 +57,7 @@ const Footer = () => {
           </div>
         </nav>
       </footer>
-      <footer className="bg-neutral">
+      <footer className="bg-[#1b4332]">
         <div className="container mx-auto footer sm:footer-horizontal  text-neutral-content items-center p-4">
           <aside className="grid-flow-col items-center">
             <svg
