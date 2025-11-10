@@ -1,3 +1,4 @@
+import { div } from "framer-motion/client";
 import React from "react";
 import { FaFire, FaWifi } from "react-icons/fa";
 import { GiElectric } from "react-icons/gi";
@@ -78,68 +79,70 @@ const StyledWrapper = styled.div`
 
 const Categories = () => {
   return (
-    <div className="py-28 container mx-auto">
-      <div className="flex justify-center">
-        <h2 className="text-2xl border py-2 px-6 rounded-full bg-[#AAD576]/70 text-[#245501]">
-          Categories
-        </h2>
-      </div>
-      <p className="text-center mt-5 text-xl">
-        Manage all your essential utility services in one convenient location
-      </p>
-      {/* All Cards */}
-      <div className="mt-12 grid grid-cols-4 justify-around gap-20">
-        <div>
-          <StyledWrapper>
-            <div className="card">
-              <span className="card__title">Electricity</span>
-              <div className="flex justify-center">
-                <GiElectric size={70} color="black" />
-              </div>
-              <p className="card__content mt-6">
-                Manage your Electricity bills and consumption with ease.
-              </p>
-            </div>
-          </StyledWrapper>
+    <div className="bg-gradient">
+      <div className="py-28 container mx-auto">
+        <div className="flex justify-center">
+          <h2 className="text-2xl border py-2 px-6 rounded-full bg-[#AAD576]/70 text-[#245501]">
+            Categories
+          </h2>
         </div>
-        <div>
-          <StyledWrapper>
-            <div className="card">
-              <span className="card__title">Gas</span>
-              <div className="flex justify-center">
-                <RiFireLine size={70} color="black" />
+        <p className="text-center mt-5 text-xl">
+          Manage all your essential utility services in one convenient location
+        </p>
+        {/* All Cards */}
+        <div className="mt-12 grid grid-cols-4 justify-around gap-20">
+          <div>
+            <StyledWrapper>
+              <div className="card">
+                <span className="card__title">Electricity</span>
+                <div className="flex justify-center">
+                  <GiElectric size={70} color="black" />
+                </div>
+                <p className="card__content mt-6">
+                  Manage your Electricity bills and consumption with ease.
+                </p>
               </div>
-              <p className="card__content mt-6">
-                Track your gas utility expenses and usage.
-              </p>
-            </div>
-          </StyledWrapper>
-        </div>
-        <div>
-          <StyledWrapper>
-            <div className="card">
-              <span className="card__title">Water</span>
-              <div className="flex justify-center">
-                <IoWaterOutline size={70} color="black" />
+            </StyledWrapper>
+          </div>
+          <div>
+            <StyledWrapper>
+              <div className="card">
+                <span className="card__title">Gas</span>
+                <div className="flex justify-center">
+                  <RiFireLine size={70} color="black" />
+                </div>
+                <p className="card__content mt-6">
+                  Track your gas utility expenses and usage.
+                </p>
               </div>
-              <p className="card__content mt-6">
-                Monitor water usage and billing services.
-              </p>
-            </div>
-          </StyledWrapper>
-        </div>
-        <div>
-          <StyledWrapper>
-            <div className="card">
-              <span className="card__title">Electricity</span>
-              <div className="flex justify-center">
-                <FaWifi size={70} color="black" />
+            </StyledWrapper>
+          </div>
+          <div>
+            <StyledWrapper>
+              <div className="card">
+                <span className="card__title">Water</span>
+                <div className="flex justify-center">
+                  <IoWaterOutline size={70} color="black" />
+                </div>
+                <p className="card__content mt-6">
+                  Monitor water usage and billing services.
+                </p>
               </div>
-              <p className="card__content mt-6">
-                Manage internet service payments.
-              </p>
-            </div>
-          </StyledWrapper>
+            </StyledWrapper>
+          </div>
+          <div>
+            <StyledWrapper>
+              <div className="card">
+                <span className="card__title">Electricity</span>
+                <div className="flex justify-center">
+                  <FaWifi size={70} color="black" />
+                </div>
+                <p className="card__content mt-6">
+                  Manage internet service payments.
+                </p>
+              </div>
+            </StyledWrapper>
+          </div>
         </div>
       </div>
     </div>

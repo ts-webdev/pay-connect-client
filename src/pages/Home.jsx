@@ -1,6 +1,7 @@
 import React from "react";
 import Banner from "../components/Banner";
 import Categories from "../components/Categories";
+import RecentBills from "../components/RecentBills";
 
 const Home = () => {
   return (
@@ -9,7 +10,8 @@ const Home = () => {
         <Banner></Banner>
       </header>
       <main>
-        <Categories></Categories> 
+        <Categories></Categories>
+        <RecentBills></RecentBills>
       </main>
     </div>
   );
