@@ -1,4 +1,3 @@
-import { div } from "framer-motion/client";
 import React from "react";
 import { FaFire, FaWifi } from "react-icons/fa";
 import { GiElectric } from "react-icons/gi";
@@ -79,10 +78,10 @@ const StyledWrapper = styled.div`
 
 const Categories = () => {
   return (
-    <div className="bg-gradient">
+    <div className="bg-black">
       <div className="py-28 container mx-auto">
         <div className="flex justify-center">
-          <h2 className="text-2xl border py-2 px-6 rounded-full bg-[#AAD576]/70 text-[#245501]">
+          <h2 className="text-2xl  py-2 px-6 rounded-full bg-[#245501] text-white">
             Categories
           </h2>
         </div>

@@ -43,8 +43,8 @@ const Navbar = () => {
       });
   };
   return (
-    <div className="sticky top-0 z-100 pt-5">
-      <div className="navbar container mx-auto">
+    <div className="sticky top-0 z-100 pt-5 ">
+      <div className="navbar container  mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -68,29 +68,13 @@ const Navbar = () => {
               tabIndex="-1"
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
+              {links}
             </ul>
           </div>
           {/* logo */}
           <Link
             to={"/"}
-            className="text-3xl flex items-end font-bold cursor-pointer"
+            className="text-3xl flex items-end font-bold cursor-pointer -ml-3"
           >
             <img className="h-10" src={logo} alt="" />
             <span className="-ml-1.5">ayConnect</span>
