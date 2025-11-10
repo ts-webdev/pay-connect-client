@@ -81,6 +81,7 @@ const StyledWrapper = styled.div`
 const SeeDetails = () => {
   return (
     <div className="bg-linear-to-b from-[#081c15] to-black ">
+      <title>PayConnect | Monthly electricity Bill</title>
       <div className="-mt-24 pt-35 pb-28 container mx-auto">
         <div className="flex items-center gap-3">
           <Link className="hover:text-gray-300" to={"/"}>

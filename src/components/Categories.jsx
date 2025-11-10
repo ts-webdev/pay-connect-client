@@ -93,7 +93,7 @@ const StyledWrapper = styled.div`
 
 const Categories = () => {
   return (
-    <div className="bg-linear-to-b from-[#081c15] to-black relative">
+    <div className="bg-linear-to-bl from-[#081c15] to-black relative">
       <div className="pointer-events-none absolute -bottom-90 -left-30 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
       <div className="py-28 container mx-auto">
         <div className="flex justify-center">
@@ -101,7 +101,7 @@ const Categories = () => {
             Categories
           </h2>
         </div>
-        <p className="text-center mt-5 text-xl">
+        <p className="text-center mt-5 text-lg">
           Manage all your essential utility services in one convenient location
         </p>
         {/* All Cards */}

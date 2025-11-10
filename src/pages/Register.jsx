@@ -19,6 +19,8 @@ const Register = () => {
   };
   return (
     <div className="hero bg-linear-to-b from-[#081c15] to-black min-h-screen -mt-22">
+      
+      <title>PayConnect | Register</title>
       <div className="flex items-center justify-center p-4">
         <div className="bg-white/10 rounded-xl w-full  p-8 text-center border border-gray-50/20">
           {/* Icon */}

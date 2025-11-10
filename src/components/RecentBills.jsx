@@ -10,7 +10,7 @@ const RecentBills = () => {
             Recent Bills
           </h2>
         </div>
-        <p className="text-center mt-5 text-xl">
+        <p className="text-center mt-5 text-lg">
           Stay up to date with your latest utility bills and payment status
         </p>
         {/* All Cards */}

@@ -41,13 +41,13 @@ const Footer = () => {
             <h6 className="footer-title text-lg">Follow Us</h6>
             <p className="text-white/60 flex gap-4">
               <FaFacebook
-                className="border p-2 rounded-lg"
+                className="border p-2 rounded-lg hover:text-white"
                 size={40}
               ></FaFacebook>
-              <BsTwitterX className="border p-2 rounded-lg" size={40} />
+              <BsTwitterX className="border p-2 rounded-lg hover:text-white" size={40} />
 
               <FaYoutube
-                className="border p-2 rounded-lg"
+                className="border p-2 rounded-lg hover:text-white"
                 size={40}
               ></FaYoutube>
             </p>
