@@ -4,6 +4,7 @@ import { GiElectric } from "react-icons/gi";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { Link } from "react-router";
 
 const BillCard = () => {
   return (
@@ -49,7 +50,7 @@ const BillCard = () => {
       </div>
       <button className="relative h-fit w-fit px-[1.4em] py-[0.7em] mt-2 border border-[#518134] rounded-full flex justify-center items-center gap-[0.7em] overflow-hidden group/btn hover:border-[#081c15]/50 hover:shadow-lg  active:scale-95 transition-all duration-300 backdrop-blur-md bg-[#6a994e]/40">
         <div className="absolute inset-0 bg-linear-to-r from-[#6a994e]/30 via-[#a7c957]/30 to-[#386641]/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-        <p className="relative z-10 font-medium tracking-wide">See Details</p>
+        <Link to={"/see-details"} className="relative z-10 font-medium tracking-wide">See Details</Link>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
