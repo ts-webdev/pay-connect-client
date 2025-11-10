@@ -1,85 +1,100 @@
 import React from "react";
 import { FaFire, FaWifi } from "react-icons/fa";
 import { GiElectric } from "react-icons/gi";
-import { IoIosWater } from "react-icons/io";
 import { IoWaterOutline } from "react-icons/io5";
 import { RiFireLine } from "react-icons/ri";
+import { Link } from "react-router";
 import styled from "styled-components";
 const StyledWrapper = styled.div`
+  .parent {
+    width: 290px;
+    height: 300px;
+    perspective: 1000px;
+  }
+
   .card {
-    padding: 20px;
-    background: #dad7cd;
-    border: 6px solid #a3b18a;
-    box-shadow: 12px 12px 0 #132a13;
-    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(
+      135deg,
+      rgb(0, 255, 214) 0%,
+      rgb(8, 226, 96) 100%
+    );
+    transition: all 0.5s ease-in-out;
+    transform-style: preserve-3d;
+    box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px,
+      rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
   }
 
-  .card:hover {
-    transform: translate(-5px, -5px);
-    box-shadow: 17px 17px 0 #132a13;
-  }
-
-  .card__title {
-    font-size: 32px;
-    font-weight: 900;
-    color: #000;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    display: block;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card__title::after {
-    content: "";
+  .glass {
+    transform-style: preserve-3d;
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 90%;
-    height: 3px;
-    background-color: #000;
-    transform: translateX(-100%);
-    transition: transform 0.3s;
+    inset: 8px;
+    border-radius: 55px;
+    border-top-right-radius: 100%;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.349) 0%,
+      rgba(255, 255, 255, 0.815) 100%
+    );
+    /* -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); */
+    transform: translate3d(0px, 0px, 25px);
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+    transition: all 0.5s ease-in-out;
   }
 
-  .card:hover .card__title::after {
-    transform: translateX(0);
+  .content {
+    padding: 100px 60px 0px 30px;
+    transform: translate3d(0, 0, 26px);
   }
 
-  .card__content {
-    font-size: 16px
-    line-height: 1.4;
-    color: #000;
-    margin-bottom: 20px;
+  .content .title {
+    display: block;
+    color: #00894d;
+    font-weight: 900;
+    font-size: 20px;
   }
 
-  @keyframes glitch {
-    0% {
-      transform: translate(2px, 2px);
-    }
-    25% {
-      transform: translate(-2px, -2px);
-    }
-    50% {
-      transform: translate(-2px, 2px);
-    }
-    75% {
-      transform: translate(2px, -2px);
-    }
-    100% {
-      transform: translate(2px, 2px);
-    }
+  .content .text {
+    display: block;
+    color: rgba(0, 137, 78, 0.7647058824);
+    font-size: 15px;
+    margin-top: 20px;
+  }
+  .parent:hover .card {
+    transform: rotate3d(1, 1, 0, 30deg);
+    box-shadow: rgba(5, 71, 17, 0.3) 30px 50px 25px -40px,
+      rgba(5, 71, 17, 0.1) 0px 25px 30px 0px;
   }
 
-  .glitch {
-    animation: glitch 0.3s infinite;
+  .parent:hover .card .bottom .social-buttons-container .social-button {
+    transform: translate3d(0, 0, 50px);
+    box-shadow: rgba(5, 71, 17, 0.2) -5px 20px 10px 0px;
+  }
+
+  .parent:hover .card .logo .circle2 {
+    transform: translate3d(0, 0, 60px);
+  }
+
+  .parent:hover .card .logo .circle3 {
+    transform: translate3d(0, 0, 80px);
+  }
+
+  .parent:hover .card .logo .circle4 {
+    transform: translate3d(0, 0, 100px);
+  }
+
+  .parent:hover .card .logo .circle5 {
+    transform: translate3d(0, 0, 120px);
   }
 `;
 
 const Categories = () => {
   return (
     <div className="bg-linear-to-b from-[#081c15] to-black relative">
-     <div className="pointer-events-none absolute -bottom-90 -left-30 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
+      <div className="pointer-events-none absolute -bottom-90 -left-30 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
       <div className="py-28 container mx-auto">
         <div className="flex justify-center">
           <h2 className="text-2xl  py-2 px-6 rounded-full bg-[#245501] text-white">
@@ -91,61 +106,72 @@ const Categories = () => {
         </p>
         {/* All Cards */}
         <div className="mt-12 grid grid-cols-4 justify-around gap-20">
-          <div>
+          <Link to={'/bills'} className="cursor-pointer">
             <StyledWrapper>
+            <div className="parent">
               <div className="card">
-                <span className="card__title">Electricity</span>
-                <div className="flex justify-center">
-                  <GiElectric size={70} color="black" />
+                <div className="glass" />
+                <div className="content">
+                  <GiElectric size={50} color="#00894d" className="-mt-6 mb-3" />
+                  <span className="title">Electricity</span>
+                  <span className="text">
+                    Manage your electricity bills and payments with ease.
+                  </span>
                 </div>
-                <p className="card__content mt-6">
-                  Manage your Electricity bills and consumption with ease.
-                </p>
               </div>
-            </StyledWrapper>
-          </div>
-          <div>
+            </div>
+          </StyledWrapper>
+          </Link>
+          <Link to={'/bills'} className="cursor-pointer">
             <StyledWrapper>
+            <div className="parent">
               <div className="card">
-                <span className="card__title">Gas</span>
-                <div className="flex justify-center">
-                  <RiFireLine size={70} color="black" />
+                <div className="glass" />
+                <div className="content">
+                  <RiFireLine size={50} color="#00894d" className="-mt-6 mb-3" />
+                  <span className="title">Gas</span>
+                  <span className="text">
+                   Track your gas utility expenses.
+                  </span>
                 </div>
-                <p className="card__content mt-6">
-                  Track your gas utility expenses and usage.
-                </p>
               </div>
-            </StyledWrapper>
-          </div>
-          <div>
+            </div>
+          </StyledWrapper>
+          </Link>
+          <Link to={'/bills'} className="cursor-pointer">
             <StyledWrapper>
+            <div className="parent">
               <div className="card">
-                <span className="card__title">Water</span>
-                <div className="flex justify-center">
-                  <IoWaterOutline size={70} color="black" />
+                <div className="glass" />
+                <div className="content">
+                  <IoWaterOutline size={50} color="#00894d" className="-mt-6 mb-3" />
+                  <span className="title">Water</span>
+                  <span className="text">
+                    Monitor water usage and billing.
+                  </span>
                 </div>
-                <p className="card__content mt-6">
-                  Monitor water usage and billing services.
-                </p>
               </div>
-            </StyledWrapper>
-          </div>
-          <div>
+            </div>
+          </StyledWrapper>
+          </Link>
+          <Link to={'/bills'} className="cursor-pointer">
             <StyledWrapper>
+            <div className="parent">
               <div className="card">
-                <span className="card__title">Electricity</span>
-                <div className="flex justify-center">
-                  <FaWifi size={70} color="black" />
+                <div className="glass" />
+                <div className="content">
+                  <FaWifi size={50} color="#00894d" className="-mt-6 mb-3" />
+                  <span className="title">Internet</span>
+                  <span className="text">
+                   Manage internet service payments.
+                  </span>
                 </div>
-                <p className="card__content mt-6">
-                  Manage internet service payments.
-                </p>
               </div>
-            </StyledWrapper>
-          </div>
+            </div>
+          </StyledWrapper>
+          </Link>
         </div>
       </div>
-      
     </div>
   );
 };

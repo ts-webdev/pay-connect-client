@@ -1,5 +1,4 @@
 import React from "react";
-
 import BillCard from "./BillCard";
 
 const RecentBills = () => {
