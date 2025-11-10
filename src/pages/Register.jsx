@@ -1,19 +1,13 @@
 import React, { use } from "react";
-import {
-  FaEnvelope,
-  FaLock,
-  FaGoogle,
-  FaFacebookF,
-  FaApple,
-} from "react-icons/fa";
-import { IoLogInOutline } from "react-icons/io5";
-import { AuthContext } from "../authContext/AuthContext";
 import { BiLogInCircle } from "react-icons/bi";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import { AuthContext } from "../authContext/AuthContext";
 import { Link } from "react-router";
+import { IoCreateOutline, IoPerson } from "react-icons/io5";
+import { IoMdPhotos } from "react-icons/io";
 
-const Login = () => {
+const Register = () => {
   const { loginWithGoogle } = use(AuthContext);
-
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then((data) => {
@@ -30,18 +24,28 @@ const Login = () => {
           {/* Icon */}
           <div className="flex justify-center mb-4">
             <div className="bg-gray-100 p-4 rounded-full">
-              <BiLogInCircle className="text-2xl text-gray-700" size={30} />
+              <IoCreateOutline className="text-2xl text-gray-700" size={30} />
+
             </div>
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-semibold mb-1">Welcome Back!</h2>
+          <h2 className="text-2xl font-semibold mb-1">Create an account</h2>
           <p className="text-gray-500 text-sm mb-6">
-            Please enter your details to Login.
+            Please enter your details to register.
           </p>
 
           {/* Form */}
           <form className="space-y-3  w-xs">
+            <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
+              <IoPerson className="text-gray-400"  />
+
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="grow bg-transparent  outline-none"
+              />
+            </label>
             <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
               <FaEnvelope className="text-gray-400" />
               <input
@@ -50,7 +54,16 @@ const Login = () => {
                 className="grow bg-transparent  outline-none"
               />
             </label>
+            <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
+              <IoMdPhotos className="text-gray-400"/>
 
+              <input
+                type="text"
+                placeholder="Photo URL"
+                className="grow bg-transparent  outline-none"
+              />
+            </label>
+            
             <label className="border-b border-gray-500 py-3 flex items-center gap-2">
               <FaLock className="text-gray-400" />
               <input
@@ -60,17 +73,11 @@ const Login = () => {
               />
             </label>
 
-            <div className="flex justify-end text-sm">
-              <a href="#" className="text-gray-500 hover:underline">
-                Forgot password?
-              </a>
-            </div>
-
             <button
               type="submit"
               className="btn w-full btn-primary text-white  rounded-full font-semibold mt-2"
             >
-              Login
+             Register
             </button>
           </form>
 
@@ -113,12 +120,11 @@ const Login = () => {
               Login with Google
             </button>
           </div>
-          
-          <p className="text-sm font-light text-gray-400 mt-4">Don't have an account? <Link to={"/register"} className="font-semibold hover:underline">Register</Link></p>
+          <p className="text-sm font-light text-gray-400 mt-4">Already have an account? <Link to={"/login"} className="font-semibold hover:underline">Login</Link></p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;

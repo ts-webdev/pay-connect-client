@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Bills from "../pages/Bills";
 import SeeDetails from "../pages/SeeDetails";
+import Register from "../pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -20,11 +21,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "see-details",
-        Component: SeeDetails
+        Component: SeeDetails,
       },
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
       },
     ],
   },
