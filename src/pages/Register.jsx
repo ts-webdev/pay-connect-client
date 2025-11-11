@@ -8,7 +8,7 @@ import { IoMdPhotos } from "react-icons/io";
 import toast from "react-hot-toast";
 
 const Register = () => {
-  const { loginWithGoogle, createNewUser } = use(AuthContext);
+  const { loginWithGoogle, createNewUser, updateUser } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -51,6 +51,15 @@ const Register = () => {
           toast.success(
             "Congratulation, your account has been successfully created. "
           );
+          const userData = {
+            displayName: name,
+            photoURL: photo,
+          };
+          updateUser(userData)
+            .then(() => {})
+            .catch((error) => {
+              toast.error(error);
+            });
         })
         .catch((error) => {
           const errorMessage = error.message;

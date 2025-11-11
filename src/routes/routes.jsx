@@ -19,9 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "/bills",
         Component: Bills,
+        loader: ()=> fetch("http://localhost:3000/bills")
       },
       {
-        path: "see-details",
+        path: "see-details/:id",
         element: <PrivateRoute>
           <SeeDetails></SeeDetails>
         </PrivateRoute>

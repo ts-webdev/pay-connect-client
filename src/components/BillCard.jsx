@@ -78,8 +78,8 @@ const StyledWrapper = styled.div`
   }
 
   .card__button {
-    border: 3px solid #000;
-    background: #000;
+    background: #538D22;
+    border-radius: 5px;
     color: #fff;
     padding: 10px;
     font-size: 18px;
@@ -101,8 +101,8 @@ const StyledWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 105%;
-    background-color: #5ad641;
-    color: #000;
+    background-color: #1A4301;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,7 +153,7 @@ const BillCard = () => {
       <div className="card">
         <div className="">
           <GiElectric
-            className="bg-[#132a13] p-2 rounded-lg my-2"
+            className="bg-primary p-2 rounded-lg my-2"
             size={50}
             color="#f2e8cf"
           />

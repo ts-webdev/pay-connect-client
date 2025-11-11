@@ -22,7 +22,7 @@ const Navbar = () => {
       </li>
       {user && (
         <li>
-          <NavLink className={"rounded-full btn btn-ghost"} to={"/login"}>
+          <NavLink className={"rounded-full btn btn-ghost"} to={"/my-pay-bills"}>
             My Pay Bills
           </NavLink>
         </li>
@@ -106,7 +106,7 @@ const Navbar = () => {
             </div>
           )}
           {user && (
-            <div className="avatar avatar-online ">
+            <div title={user.displayName} className="avatar avatar-online ">
               <div className="w-11 ml-3 rounded-full ring-primary ring-2">
                 <img src={user.photoURL} />
               </div>

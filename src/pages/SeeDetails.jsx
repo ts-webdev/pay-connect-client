@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import {
   FaBolt,
   FaCalendarAlt,
   FaMapMarkerAlt,
   FaFileAlt,
   FaDollarSign,
+  FaLock,
+  FaEnvelope,
 } from "react-icons/fa";
 import { FiDownload, FiShare2 } from "react-icons/fi";
 import Lottie from "lottie-react";
@@ -79,6 +81,24 @@ const StyledWrapper = styled.div`
 `;
 
 const SeeDetails = () => {
+  const {id} = useParams()
+  const modalRef = useRef(null);
+  const [data, setData] = useState([])
+console.log(data)
+  // modal
+  const handlePayBill = () => {
+    modalRef.current.showModal();
+  };
+
+  // fetch data
+  useEffect(()=>{
+    fetch(`http://localhost:3000/bills/${id}`)
+    .then(res=>res.json())
+    .then(data =>{
+      setData(data)
+    })
+  },[id])
+
   return (
     <div className="bg-linear-to-b from-[#081c15] to-black ">
       <title>PayConnect | Monthly electricity Bill</title>
@@ -100,8 +120,8 @@ const SeeDetails = () => {
         <div className="card bg-black/20 shadow-md border mx-auto mt-10 p-10">
           <div className="flex">
             {/* Left side Image */}
-            <div className="w-70 rounded-2xl bg-white">
-              <Lottie animationData={electricity}></Lottie>
+            <div className="w-100 h-70 rounded-2xl bg-white">
+              
             </div>
 
             {/* Right Side Details */}
@@ -110,10 +130,10 @@ const SeeDetails = () => {
                 <div className="flex items-center gap-3">
                   <div>
                     <h2 className="card-title text-5xl font-bold">
-                      Monthly Electricity Bill
+                       {data.title}
                     </h2>
                     <p className="text-lg mt-3 text-success">
-                      Electricity Bill
+                      {data.category}
                     </p>
                   </div>
                 </div>
@@ -126,16 +146,15 @@ const SeeDetails = () => {
                 Bill Information:
               </h3>
               <div className="flex items-center gap-2">
-                <FaDollarSign className="text-gray-500" />
                 <p>
-                  <span className="font-bold text-lg">$125.50</span>
+                  <span className="font-bold text-lg"><span className="mr-2">৳</span>{data.amount}</span>
                 </p>
               </div>
 
               <div className="flex items-center gap-2">
                 <FaCalendarAlt className="text-gray-500" />
                 <p>
-                  Due Date: <span className="font-medium">1/15/2024</span>
+                  Due Date: <span className="font-medium">{data.date}</span>
                 </p>
               </div>
 
@@ -143,7 +162,7 @@ const SeeDetails = () => {
                 <FaMapMarkerAlt className="text-gray-500" />
                 <p>
                   Service Location:{" "}
-                  <span className="font-medium">New York, NY</span>
+                  <span className="font-medium">{data.location}</span>
                 </p>
               </div>
             </div>
@@ -154,18 +173,13 @@ const SeeDetails = () => {
             <div className="space-y-3 text-sm mt-5">
               <h3 className="font-semibold text-gray-500 ">Description:</h3>
               <p className="text-gray-300">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic
-                placeat animi pariatur non quas commodi, suscipit aliquam
-                itaque, et sapiente exercitationem dolorem eum a, voluptate
-                repellat culpa at atque cum. Assumenda eius nam debitis, rerum
-                enim excepturi, porro repellendus facilis iusto cumque quaerat
-                vitae sit eum modi unde velit ullam!
+                {data.description}
               </p>
             </div>
             {/* Pay Bill Button */}
             <div className="flex justify-end mt-5">
               <StyledWrapper>
-                <button className="button">
+                <button onClick={handlePayBill} className="button">
                   <p>Pay Bill</p>
                 </button>
               </StyledWrapper>
@@ -173,6 +187,53 @@ const SeeDetails = () => {
           </div>
         </div>
       </div>
+      {/* Modal */}
+      <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box bg-linear-to-tl from-[#081c15] to-[#102c00]/50">
+          <form className="space-y-3  w-full">
+            <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
+              <FaEnvelope className="text-gray-400" />
+              <input
+                name="email"
+                type="email"
+                placeholder="Email"
+                className="grow bg-none outline-none"
+                readOnly
+              />
+            </label>
+
+            <label className="border-b border-gray-500 py-3 flex items-center gap-2">
+              <FaLock className="text-gray-400" />
+              <input
+                name="billId"
+                type="text"
+                placeholder="Bill Id"
+                className="grow bg-transparent outline-none"
+                required
+              />
+            </label>
+
+            <div className="flex justify-end text-sm">
+              <a href="#" className="text-gray-500 hover:underline">
+                Forgot password?
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              className="btn w-full btn-primary text-white  rounded-full font-semibold mt-2"
+            >
+              Login
+            </button>
+          </form>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
