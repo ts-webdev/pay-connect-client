@@ -1,25 +1,79 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { BiLogInCircle } from "react-icons/bi";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { AuthContext } from "../authContext/AuthContext";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { IoCreateOutline, IoPerson } from "react-icons/io5";
 import { IoMdPhotos } from "react-icons/io";
+import toast from "react-hot-toast";
 
 const Register = () => {
-  const { loginWithGoogle } = use(AuthContext);
+  const { loginWithGoogle, createNewUser } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Handle Password with error
+  const handlePassword = (e) => {
+    const password = e.target.value;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    setPassword(password);
+    if (password === "") {
+      setPasswordError("");
+    } else if (password.length < 6) {
+      setPasswordError("password must be at least 6 characters");
+    } else {
+      if (!hasUppercase) {
+        setPasswordError("Password must include at least one uppercase letter");
+      } else if (!hasLowercase) {
+        setPasswordError("Password must include at least one lowercase letter");
+      } else {
+        setPasswordError("");
+      }
+    }
+  };
+
+  // Create New User
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photo = e.target.photo.value;
+    const password = e.target.password.value;
+
+    if (passwordError === "") {
+      createNewUser(email, password)
+        .then((data) => {
+          console.log(data);
+          navigate(location.state || "/");
+          toast.success(
+            "Congratulation, your account has been successfully created. "
+          );
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          toast.error(errorMessage);
+        });
+    }
+  };
+
+  // Login With Google
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then((data) => {
         console.log(data.user);
+        navigate(location.state || "/");
+        toast.success(`Welcome Back ${data.displayName}`);
       })
       .catch((error) => {
-        console.error("Error during Google login:", error);
+        const errorMessage = error.message;
+        toast.error(errorMessage);
       });
   };
   return (
     <div className="hero bg-linear-to-b from-[#081c15] to-black min-h-screen -mt-22">
-      
       <title>PayConnect | Register</title>
       <div className="flex items-center justify-center p-4">
         <div className="bg-white/10 rounded-xl w-full  p-8 text-center border border-gray-50/20">
@@ -27,7 +81,6 @@ const Register = () => {
           <div className="flex justify-center mb-4">
             <div className="bg-gray-100 p-4 rounded-full">
               <IoCreateOutline className="text-2xl text-gray-700" size={30} />
-
             </div>
           </div>
 
@@ -38,48 +91,60 @@ const Register = () => {
           </p>
 
           {/* Form */}
-          <form className="space-y-3  w-xs">
+          <form onSubmit={handleRegister} className="space-y-3  w-xs">
             <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
-              <IoPerson className="text-gray-400"  />
+              <IoPerson className="text-gray-400" />
 
               <input
+                name="name"
                 type="text"
                 placeholder="Full Name"
                 className="grow bg-transparent  outline-none"
+                required
               />
             </label>
             <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
               <FaEnvelope className="text-gray-400" />
               <input
+                name="email"
                 type="email"
                 placeholder="Email"
                 className="grow bg-transparent  outline-none"
+                required
               />
             </label>
             <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
-              <IoMdPhotos className="text-gray-400"/>
+              <IoMdPhotos className="text-gray-400" />
 
               <input
+                name="photo"
                 type="text"
                 placeholder="Photo URL"
                 className="grow bg-transparent  outline-none"
-              />
-            </label>
-            
-            <label className="border-b border-gray-500 py-3 flex items-center gap-2">
-              <FaLock className="text-gray-400" />
-              <input
-                type="password"
-                placeholder="Password"
-                className="grow bg-transparent outline-none"
+                required
               />
             </label>
 
+            <label className="border-b border-gray-500 py-3 flex items-center gap-2">
+              <FaLock className="text-gray-400" />
+              <input
+                name="password"
+                type="password"
+                defaultValue={password}
+                onChange={handlePassword}
+                placeholder="Password"
+                className="grow bg-transparent outline-none"
+                required
+              />
+            </label>
+            <p className="text-left text-error text-sm">
+              {passwordError === "" ? "" : passwordError}
+            </p>
             <button
               type="submit"
               className="btn w-full btn-primary text-white  rounded-full font-semibold mt-2"
             >
-             Register
+              Register
             </button>
           </form>
 
@@ -122,7 +187,12 @@ const Register = () => {
               Login with Google
             </button>
           </div>
-          <p className="text-sm font-light text-gray-400 mt-4">Already have an account? <Link to={"/login"} className="font-semibold hover:underline">Login</Link></p>
+          <p className="text-sm font-light text-gray-400 mt-4">
+            Already have an account?{" "}
+            <Link to={"/login"} className="font-semibold hover:underline">
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>

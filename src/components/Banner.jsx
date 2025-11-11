@@ -9,7 +9,7 @@ import payBill from "../assets/paybill.png";
 
 const Banner = () => {
   return (
-    <section className="w-full h-screen relative bg-black mb-5 overflow-hidden -mt-22">
+    <section className="w-full h-screen relative bg-black mb-5 overflow-hidden -mt-24">
       <DotBackground></DotBackground>
       <div className="absolute inset-0">
         <div>

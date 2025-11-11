@@ -9,18 +9,43 @@ import {
 import { IoLogInOutline } from "react-icons/io5";
 import { AuthContext } from "../authContext/AuthContext";
 import { BiLogInCircle } from "react-icons/bi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const { loginWithGoogle } = use(AuthContext);
+  const { loginWithGoogle, loginUser } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  // login With email & password
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    loginUser(email, password)
+      .then((data) => {
+        console.log(data.user);
+        navigate(location.state || "/");
+        toast.success(`Welcome Back ${data.displayName}`);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+      });
+  };
+
+  // login with google
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then((data) => {
         console.log(data.user);
+        navigate(location.state || "/");
+        toast.success(`Welcome Back ${data.displayName}`);
       })
       .catch((error) => {
-        console.error("Error during Google login:", error);
+        const errorMessage = error.message;
+        toast.error(errorMessage);
       });
   };
   return (
@@ -42,22 +67,26 @@ const Login = () => {
           </p>
 
           {/* Form */}
-          <form className="space-y-3  w-xs">
+          <form onSubmit={handleLogin} className="space-y-3  w-xs">
             <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
               <FaEnvelope className="text-gray-400" />
               <input
+                name="email"
                 type="email"
                 placeholder="Email"
-                className="grow bg-transparent  outline-none"
+                className="grow bg-none  outline-none"
+                required
               />
             </label>
 
             <label className="border-b border-gray-500 py-3 flex items-center gap-2">
               <FaLock className="text-gray-400" />
               <input
+                name="password"
                 type="password"
                 placeholder="Password"
                 className="grow bg-transparent outline-none"
+                required
               />
             </label>
 
@@ -114,8 +143,13 @@ const Login = () => {
               Login with Google
             </button>
           </div>
-          
-          <p className="text-sm font-light text-gray-400 mt-4">Don't have an account? <Link to={"/register"} className="font-semibold hover:underline">Register</Link></p>
+
+          <p className="text-sm font-light text-gray-400 mt-4">
+            Don't have an account?{" "}
+            <Link to={"/register"} className="font-semibold hover:underline">
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>

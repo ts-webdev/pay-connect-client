@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { auth } from "../firebase/firebase.init";
 import {
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -19,6 +21,18 @@ const AuthProvider = ({ children }) => {
     document.querySelector("html").setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  // signup new user
+  const createNewUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  // signin User
+  const loginUser = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   //   Login with Google function can be added here
   const loginWithGoogle = () => {
@@ -42,6 +56,8 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const authData = {
+    createNewUser,
+    loginUser,
     loginWithGoogle,
     user,
     loading,
