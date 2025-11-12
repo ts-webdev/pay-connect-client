@@ -15,6 +15,7 @@ const StyledWrapper = styled.div`
     border: 6px solid #a3b18a;
     box-shadow: 12px 12px 0 #132a13;
     transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
   }
 
   .card:hover {
@@ -23,7 +24,7 @@ const StyledWrapper = styled.div`
   }
 
   .card__title {
-    font-size: 32px;
+    font-size: 1.5rem;
     font-weight: 900;
     color: #000;
     text-transform: uppercase;
@@ -82,15 +83,15 @@ const StyledWrapper = styled.div`
     border-radius: 5px;
     color: #fff;
     padding: 10px;
-    font-size: 18px;
-    left: 50%;
-    font-weight: bold;
+    font-size: 1rem;
+    left: 70%;
+    font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s;
-    width: 50%;
+    width: 30%;
     height: 100%;
   }
 
@@ -142,7 +143,8 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const BillCard = () => {
+const BillCard = ({data}) => {
+  console.log(data)
   const navigate = useNavigate();
   const handleSeeDetails = (e)=>{
     e.preventDefault();
@@ -150,31 +152,30 @@ const BillCard = () => {
   }
   return (
     <StyledWrapper>
-      <div className="card">
+      <div className="card h-[380px]">
         <div className="">
           <GiElectric
             className="bg-primary p-2 rounded-lg my-2"
             size={50}
             color="#f2e8cf"
           />
-          <span className="card__title">Monthly Electricity Bill</span>
+          <span className="card__title">{data.title}</span>
         </div>
-        <div className="flex justify-between items-center mt-2">
-          <p className="text-black border p-2 rounded-sm">Electricity</p>
-          <div className="badge badge-primary">Paid</div>
+        <div className="flex justify-between items-center ">
+          <div className="badge badge-primary">{data.category}</div>
         </div>
-        <div className="space-y-3 mt-3">
+        <div className="space-y-3 mt-3 flex-1">
           <p className="text-[0.9em] text-[#081c15]/90 leading-relaxed font-light flex items-center gap-2">
             <IoLocationSharp size={20} />
-            Dhaka, Bangladesh.
+            {data.location}
           </p>
           <p className="text-[0.9em] text-[#081c15]/90 leading-relaxed font-light flex items-center gap-2">
             <MdDateRange size={20} />
-            19/25/2025
+            {data.date}
           </p>
           <p className="text-lg -mt-1 text-[#081c15]/90 leading-relaxed font-semibold flex items-center gap-2">
             <TbCurrencyTaka size={20} />
-            150
+            {data.amount}
           </p>
         </div>
         <div>

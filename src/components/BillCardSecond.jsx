@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
     --card-accent: #7c3aed;
     --card-text: #1e293b;
     --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-
+    display: flex;
     border-radius: 20px;
     position: relative;
     overflow: hidden;
@@ -277,7 +277,6 @@ const StyledWrapper = styled.div`
 `;
 
 const BillCardSecond = ({billData}) => {
-    console.log(billData)
     const navigate = useNavigate();
   const handleSeeDetails = (e)=>{
     e.preventDefault();
@@ -285,14 +284,13 @@ const BillCardSecond = ({billData}) => {
   }
   return (
     <StyledWrapper>
-      <div className="card bg-white/35">
+      <div className="card bg-white/35 h-[525px]">
         <div className="card__glow" />
         <div className="card__content">
-          <div className="card__badge">Paid</div>
           <div className="card__image">
             <img src={imgE} alt="" />
           </div>
-          <div className="card__text">
+          <div className="card__text flex-1">
             <p className="card__title">{billData.title}</p>
             <p className="card__description">{billData.category}</p>
             <div className="space-y-3 mt-3">

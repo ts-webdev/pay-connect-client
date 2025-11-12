@@ -18,8 +18,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/bills",
-        Component: Bills,
-        loader: ()=> fetch("http://localhost:3000/bills")
+        Component: Bills
       },
       {
         path: "see-details/:id",

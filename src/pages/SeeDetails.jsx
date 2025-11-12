@@ -12,7 +12,6 @@ import {
 } from "react-icons/fa";
 import { FiDownload, FiShare2 } from "react-icons/fi";
 import Lottie from "lottie-react";
-import electricity from "../assets/electricity-lottie.json";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
@@ -81,23 +80,34 @@ const StyledWrapper = styled.div`
 `;
 
 const SeeDetails = () => {
-  const {id} = useParams()
+  const { id } = useParams();
   const modalRef = useRef(null);
-  const [data, setData] = useState([])
-console.log(data)
+  const [data, setData] = useState([]);
+  const [isCurrentMonth, setIsCurrentMonth] = useState(true);
   // modal
   const handlePayBill = () => {
     modalRef.current.showModal();
   };
 
   // fetch data
-  useEffect(()=>{
+  useEffect(() => {
     fetch(`http://localhost:3000/bills/${id}`)
-    .then(res=>res.json())
-    .then(data =>{
-      setData(data)
-    })
-  },[id])
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+
+        const billDate = data.date;
+        const billMonth = Number(billDate.split("-")[1]);
+        const date = new Date();
+        console.log(date)
+        const month = date.getMonth();
+        if (billMonth === month) {
+          setIsCurrentMonth(true);
+        } else {
+          setIsCurrentMonth(false);
+        }
+      });
+  }, [id]);
 
   return (
     <div className="bg-linear-to-b from-[#081c15] to-black ">
@@ -120,9 +130,7 @@ console.log(data)
         <div className="card bg-black/20 shadow-md border mx-auto mt-10 p-10">
           <div className="flex">
             {/* Left side Image */}
-            <div className="w-100 h-70 rounded-2xl bg-white">
-              
-            </div>
+            <div className="w-100 h-70 rounded-2xl bg-white"></div>
 
             {/* Right Side Details */}
             <div className="card-body">
@@ -130,11 +138,9 @@ console.log(data)
                 <div className="flex items-center gap-3">
                   <div>
                     <h2 className="card-title text-5xl font-bold">
-                       {data.title}
+                      {data.title}
                     </h2>
-                    <p className="text-lg mt-3 text-success">
-                      {data.category}
-                    </p>
+                    <p className="text-lg mt-3 text-success">{data.category}</p>
                   </div>
                 </div>
 
@@ -147,7 +153,10 @@ console.log(data)
               </h3>
               <div className="flex items-center gap-2">
                 <p>
-                  <span className="font-bold text-lg"><span className="mr-2">৳</span>{data.amount}</span>
+                  <span className="font-bold text-lg">
+                    <span className="mr-2">৳</span>
+                    {data.amount}
+                  </span>
                 </p>
               </div>
 
@@ -172,18 +181,27 @@ console.log(data)
           <div>
             <div className="space-y-3 text-sm mt-5">
               <h3 className="font-semibold text-gray-500 ">Description:</h3>
-              <p className="text-gray-300">
-                {data.description}
-              </p>
+              <p className="text-gray-300">{data.description}</p>
             </div>
             {/* Pay Bill Button */}
             <div className="flex justify-end mt-5">
               <StyledWrapper>
-                <button onClick={handlePayBill} className="button">
-                  <p>Pay Bill</p>
-                </button>
+                {isCurrentMonth ? (
+                  <button onClick={handlePayBill} className="button">
+                    <p>Pay Bill</p>
+                  </button>
+                ) : (
+                  <button className="btn btn-primary btn-disabled px-9">
+                    Pay Bill
+                  </button>
+                )}
               </StyledWrapper>
             </div>
+            {isCurrentMonth || (
+              <p className="text-center text-error">
+                Note: Only current month bills can be paid.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -191,34 +209,71 @@ console.log(data)
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-linear-to-tl from-[#081c15] to-[#102c00]/50">
           <form className="space-y-3  w-full">
-            <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
-              <FaEnvelope className="text-gray-400" />
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Email:
               <input
-                name="email"
                 type="email"
-                placeholder="Email"
-                className="grow bg-none outline-none"
+                defaultValue={data.email}
+                className="grow bg-none outline-none text-white"
                 readOnly
-              />
+                />
             </label>
-
-            <label className="border-b border-gray-500 py-3 flex items-center gap-2">
-              <FaLock className="text-gray-400" />
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Bill ID:
               <input
-                name="billId"
-                type="text"
-                placeholder="Bill Id"
-                className="grow bg-transparent outline-none"
+                type="email"
+                defaultValue={data._id}
+                className="grow bg-none outline-none text-white"
+                readOnly
+                />
+            </label>
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Amount (Taka):
+              <input
+                type="email"
+                defaultValue={data.amount}
+                className="grow bg-none outline-none text-white"
+                readOnly
+                />
+            </label>
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Username<span className="text-error -ml-1">*</span>:
+              <input
+                type="email"
+                placeholder="Enter Your Username"
+                className="grow bg-none outline-none text-white"
                 required
-              />
+                />
+            </label>
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Address<span className="text-error -ml-1">*</span>:
+              <input
+                type="email"
+                placeholder="Enter Your Address"
+                className="grow bg-none outline-none text-white"
+                required
+                />
+            </label>
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Phone<span className="text-error -ml-1">*</span>:
+              <input
+                type="email"
+                placeholder="Enter Your Phone Number"
+                className="grow bg-none outline-none text-white"
+                required
+                />
+            </label>
+            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+              Date:
+              <input
+                type="email"
+                defaultValue={new Date().toLocaleDateString()}
+                className="grow bg-none outline-none text-white"
+                readOnly
+                />
             </label>
 
-            <div className="flex justify-end text-sm">
-              <a href="#" className="text-gray-500 hover:underline">
-                Forgot password?
-              </a>
-            </div>
-
+            
             <button
               type="submit"
               className="btn w-full btn-primary text-white  rounded-full font-semibold mt-2"

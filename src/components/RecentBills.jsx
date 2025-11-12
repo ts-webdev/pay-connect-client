@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BillCard from "./BillCard";
 
 const RecentBills = () => {
+  const [recentData, setRecentData] = useState([])
+  useEffect(()=>{
+    fetch("http://localhost:3000/bills/latest")
+    .then(res=> res.json())
+    .then(data => setRecentData(data))
+  },[])
   return (
     <div className="py-28 bg-black">
       <div className="container mx-auto">
@@ -15,12 +21,9 @@ const RecentBills = () => {
         </p>
         {/* All Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mt-16 ">
-          <BillCard></BillCard>
-          <BillCard></BillCard>
-          <BillCard></BillCard>
-          <BillCard></BillCard>
-          <BillCard></BillCard>
-          <BillCard></BillCard>
+         {
+          recentData.map(data=>  <BillCard key={data._id} data={data}></BillCard>)
+         }
         </div>
       </div>
     </div>
