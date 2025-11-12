@@ -13,6 +13,7 @@ import {
 import { FiDownload, FiShare2 } from "react-icons/fi";
 import Lottie from "lottie-react";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 
 const StyledWrapper = styled.div`
   .button {
@@ -99,7 +100,6 @@ const SeeDetails = () => {
         const billDate = data.date;
         const billMonth = Number(billDate.split("-")[1]);
         const date = new Date();
-        console.log(date)
         const month = date.getMonth();
         if (billMonth === month) {
           setIsCurrentMonth(true);
@@ -108,6 +108,38 @@ const SeeDetails = () => {
         }
       });
   }, [id]);
+
+  // Pay Now button functionality
+  const handlePayNow = (e) => {
+    e.preventDefault();
+    const payDetails = {
+      billsId: e.target.billId.value,
+      username: e.target.userName.value,
+      phone: e.target.phone.value,
+      address: e.target.address.value,
+      email: e.target.email.value,
+      amount: e.target.amount.value,
+      date: e.target.date.value,
+      category: data.category
+    };
+    
+    fetch("http://localhost:3000/my-bills", {
+      method: "POST",
+      headers:{
+        "content-type" : "application/json"
+      },
+      body: JSON.stringify(payDetails)
+    })
+    .then(res=> res.json())
+    .then(data=>{
+      console.log("Data After Saving Mongodb:",data)
+      if(data.insertedId){
+        toast.success("Payment Successful! 🎉")
+        modalRef.current.close()
+      }
+
+    })
+  };
 
   return (
     <div className="bg-linear-to-b from-[#081c15] to-black ">
@@ -208,83 +240,90 @@ const SeeDetails = () => {
       {/* Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-linear-to-tl from-[#081c15] to-[#102c00]/50">
-          <form className="space-y-3  w-full">
+          <form  onSubmit={handlePayNow} className="space-y-3  w-full">
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Email:
               <input
+                name="email"
                 type="email"
                 defaultValue={data.email}
                 className="grow bg-none outline-none text-white"
                 readOnly
-                />
+              />
             </label>
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Bill ID:
               <input
-                type="email"
+                name="billId"
+                type="text"
                 defaultValue={data._id}
                 className="grow bg-none outline-none text-white"
                 readOnly
-                />
+              />
             </label>
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Amount (Taka):
               <input
-                type="email"
+                name="amount"
+                type="number"
                 defaultValue={data.amount}
                 className="grow bg-none outline-none text-white"
                 readOnly
-                />
+              />
             </label>
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Username<span className="text-error -ml-1">*</span>:
               <input
-                type="email"
+                name="userName"
+                type="text"
                 placeholder="Enter Your Username"
                 className="grow bg-none outline-none text-white"
                 required
-                />
+              />
             </label>
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Address<span className="text-error -ml-1">*</span>:
               <input
-                type="email"
+                name="address"
+                type="text"
                 placeholder="Enter Your Address"
                 className="grow bg-none outline-none text-white"
                 required
-                />
+              />
             </label>
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Phone<span className="text-error -ml-1">*</span>:
               <input
-                type="email"
+                name="phone"
+                type="number"
                 placeholder="Enter Your Phone Number"
                 className="grow bg-none outline-none text-white"
                 required
-                />
+              />
             </label>
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Date:
               <input
-                type="email"
+                name="date"
+                type="text"
                 defaultValue={new Date().toLocaleDateString()}
                 className="grow bg-none outline-none text-white"
                 readOnly
-                />
+              />
             </label>
 
-            
             <button
+             
               type="submit"
-              className="btn w-full btn-primary text-white  rounded-full font-semibold mt-2"
+              className="btn w-full btn-primary text-white  rounded-sm font-semibold mt-2"
             >
-              Login
+              Pay Now
             </button>
           </form>
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
+              <button className="btn bg-primary">Cancel</button>
             </form>
           </div>
         </div>

@@ -284,7 +284,7 @@ const BillCardSecond = ({billData}) => {
   }
   return (
     <StyledWrapper>
-      <div className="card bg-white/35 h-[525px]">
+      <div className="card bg-linear-to-tl from-[#081c15]/70 to-[#1A4301]/70 h-[525px]">
         <div className="card__glow" />
         <div className="card__content">
           <div className="card__image">

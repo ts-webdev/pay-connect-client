@@ -1,8 +1,10 @@
 import React from "react";
+import { FaWifi } from "react-icons/fa";
 import { FaMapLocation } from "react-icons/fa6";
 import { GiElectric } from "react-icons/gi";
-import { IoLocationSharp } from "react-icons/io5";
+import { IoLocationSharp, IoWaterOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
+import { RiFireLine } from "react-icons/ri";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
@@ -58,7 +60,7 @@ const StyledWrapper = styled.div`
   }
     .card__form {
     display: flex;
-    flex-direction: column;
+    justify-content: end;
     gap: 15px;
   }
 
@@ -78,46 +80,69 @@ const StyledWrapper = styled.div`
     color: #ffffff;
   }
 
-  .card__button {
-    background: #538D22;
-    border-radius: 5px;
-    color: #fff;
-    padding: 10px;
-    font-size: 1rem;
-    left: 70%;
-    font-weight: 500;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-    width: 30%;
-    height: 100%;
-  }
-
-  .card__button::before {
-    content: "Sure?";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 105%;
-    background-color: #1A4301;
-    color: #fff;
+  .button {
+    all: unset;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transform: translateY(100%);
-    transition: transform 0.3s;
+    position: relative;
+    padding: 0.6em 2em;
+    border: #245501 solid 0.15em;
+    border-radius: 0.25em;
+    color: #245501;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border 300ms, color 300ms;
+    user-select: none;
   }
 
-  .card__button:hover::before {
-    transform: translateY(0);
+  .button p {
+    z-index: 1;
   }
 
-  .card__button:active {
-    transform: scale(0.95);
+  .button:hover {
+    color: #dad7cd;
   }
+
+  .button:active {
+    border-color: teal;
+  }
+
+  .button::after,
+  .button::before {
+    content: "";
+    position: absolute;
+    width: 9em;
+    aspect-ratio: 1;
+    background: #245501;
+    opacity: 50%;
+    border-radius: 50%;
+    transition: transform 500ms, background 300ms;
+  }
+
+  .button::before {
+    left: 0;
+    transform: translateX(-8em);
+  }
+
+  .button::after {
+    right: 0;
+    transform: translateX(8em);
+  }
+
+  .button:hover:before {
+    transform: translateX(-1em);
+  }
+
+  .button:hover:after {
+    transform: translateX(1em);
+  }
+
+  .button:active:before,
+  .button:active:after {
+    background: teal;
+  }
+  
 
 
   @keyframes glitch {
@@ -143,22 +168,46 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const BillCard = ({data}) => {
-  console.log(data)
+const BillCard = ({ data }) => {
+  console.log(data);
   const navigate = useNavigate();
-  const handleSeeDetails = (e)=>{
+  const handleSeeDetails = (e) => {
     e.preventDefault();
-    navigate("/see-details");
-  }
+    navigate(`/see-details/${data._id}`);
+  };
   return (
     <StyledWrapper>
-      <div className="card h-[380px]">
+      <div className="card h-[380px] overflow-hidden">
         <div className="">
-          <GiElectric
-            className="bg-primary p-2 rounded-lg my-2"
-            size={50}
-            color="#f2e8cf"
-          />
+          {data.category === "Electricity" && (
+            <GiElectric
+              className="bg-primary p-2 rounded-lg my-2"
+              size={50}
+              color="#f2e8cf"
+            ></GiElectric>
+          )}
+          {data.category === "Internet" && (
+            <FaWifi
+              className="bg-primary p-2 rounded-lg my-2"
+              size={50}
+              color="#f2e8cf"
+            ></FaWifi>
+          )}
+          {data.category === "Gas" && (
+            <RiFireLine
+              className="bg-primary p-2 rounded-lg my-2"
+              size={50}
+              color="#f2e8cf"
+            ></RiFireLine>
+          )}
+          {data.category === "Water" && (
+            <IoWaterOutline
+              className="bg-primary p-2 rounded-lg my-2"
+              size={50}
+              color="#f2e8cf"
+            ></IoWaterOutline>
+          )}
+
           <span className="card__title">{data.title}</span>
         </div>
         <div className="flex justify-between items-center ">
@@ -180,8 +229,11 @@ const BillCard = ({data}) => {
         </div>
         <div>
           <form onSubmit={handleSeeDetails} className="card__form">
-            <button className="card__button">See Details</button>
+            <button className="button">
+                    <p>Pay Bill</p>
+                  </button>
           </form>
+          
         </div>
       </div>
     </StyledWrapper>

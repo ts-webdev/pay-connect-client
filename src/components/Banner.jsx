@@ -6,6 +6,72 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import payBill from "../assets/paybill.png";
+import styled from "styled-components";
+
+const StyledWrapper = styled.div`
+  .button {
+    all: unset;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.6em 2em;
+    border: mediumspringgreen solid 0.15em;
+    border-radius: 0.25em;
+    color: mediumspringgreen;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border 300ms, color 300ms;
+    user-select: none;
+  }
+
+  .button p {
+    z-index: 1;
+  }
+
+  .button:hover {
+    color: #212121;
+  }
+
+  .button:active {
+    border-color: teal;
+  }
+
+  .button::after,
+  .button::before {
+    content: "";
+    position: absolute;
+    width: 9em;
+    aspect-ratio: 1;
+    background: mediumspringgreen;
+    opacity: 50%;
+    border-radius: 50%;
+    transition: transform 500ms, background 300ms;
+  }
+
+  .button::before {
+    left: 0;
+    transform: translateX(-8em);
+  }
+
+  .button::after {
+    right: 0;
+    transform: translateX(8em);
+  }
+
+  .button:hover:before {
+    transform: translateX(-1em);
+  }
+
+  .button:hover:after {
+    transform: translateX(1em);
+  }
+
+  .button:active:before,
+  .button:active:after {
+    background: teal;
+  }
+`;
 
 const Banner = () => {
   return (
@@ -13,9 +79,6 @@ const Banner = () => {
       <DotBackground></DotBackground>
       <div className="absolute inset-0">
         <div>
-          <div className="absolute bottom-20 z-50 right-10 -translate-x-1/2 animate-bounce slow-bounce hidden md:block">
-            <img src={payBill} alt="" />
-          </div>
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -25,47 +88,49 @@ const Banner = () => {
             }}
             pagination={{
               clickable: true,
-              
             }}
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper container mx-auto"
           >
             <SwiperSlide>
-              <div className="text-left flex  items-center w-3/5 h-screen px-20">
-                <div>
-                  <h1 className="text-8xl font-black mb-5">
+              <div className="text-left flex justify-between items-center  h-screen px-30">
+                <div className=" w-1/2">
+                  <h1 className="text-6xl font-black mb-5">
                     Manage All Your Utility Bills in One Place
                   </h1>
                   <p>
                     Simplify your monthly payments with our comprehensive bill
                     management system
                   </p>
+                  <StyledWrapper className="mt-5">
+                    <button className="button">
+                      <p>Pay Bill</p>
+                    </button>
+                  </StyledWrapper>
+                </div>
+                <div className=" animate-bounce slow-bounce mt-40">
+                  <img src={payBill} alt="" />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="text-left flex  items-center w-3/5 h-screen px-20">
-                <div>
-                  <h1 className="text-8xl font-black mb-5">
-                    Never Miss a Payment Again
+              <div className="text-left flex justify-between items-center  h-screen px-30">
+                <div className=" w-1/2">
+                  <h1 className="text-6xl font-black mb-5">
+                    Manage All Your Utility Bills in One Place
                   </h1>
                   <p>
-                    Set up automatic reminders and track all your utility
-                    expenses effortlessly
+                    Simplify your monthly payments with our comprehensive bill
+                    management system
                   </p>
+                  <StyledWrapper className="mt-5">
+                    <button className="button">
+                      <p>Pay Bill</p>
+                    </button>
+                  </StyledWrapper>
                 </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="text-left flex  items-center w-3/5 h-screen px-20">
-                <div>
-                  <h1 className="text-8xl font-black mb-5">
-                    Secure and Reliable Bill Tracking
-                  </h1>
-                  <p>
-                    Your financial data is protected with enterprise-grade
-                    security
-                  </p>
+                <div className=" animate-bounce slow-bounce mt-40">
+                  <img src={payBill} alt="" />
                 </div>
               </div>
             </SwiperSlide>

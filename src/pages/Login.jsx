@@ -27,7 +27,7 @@ const Login = () => {
       .then((data) => {
         console.log(data.user);
         navigate(location.state || "/");
-        toast.success(`Welcome Back ${data.displayName}`);
+        toast.success(`Welcome Back`);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -41,7 +41,7 @@ const Login = () => {
       .then((data) => {
         console.log(data.user);
         navigate(location.state || "/");
-        toast.success(`Welcome Back ${data.displayName}`);
+        toast.success(`Welcome Back`);
       })
       .catch((error) => {
         const errorMessage = error.message;

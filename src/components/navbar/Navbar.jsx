@@ -3,6 +3,7 @@ import logo from "../../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import "./navbar.css";
 import { AuthContext } from "../../authContext/AuthContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logOut, theme, setTheme } = use(AuthContext);
@@ -37,7 +38,9 @@ const Navbar = () => {
 
   const handleSignOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        toast.success("Successfully Logout ")
+      })
       .catch((error) => {
         console.log(error);
       });
