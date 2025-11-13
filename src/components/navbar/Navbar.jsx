@@ -234,7 +234,7 @@ const Navbar = () => {
 
         {/* Navbar End */}
         <div className="navbar-end w-[80%] ">
-          <ul className="menu menu-horizontal px-1 hidden lg:flex gap-3">
+          <ul className="menu menu-horizontal px-1 hidden lg:flex gap-1">
             {links}
           </ul>
 
@@ -254,7 +254,7 @@ const Navbar = () => {
               <NavLink
                 to="/login"
                 className={({ isActive }) =>
-                  `flex gap-2 items-center rounded-full px-4 py-2 transition-colors duration-200 ${
+                  `flex gap-2 items-center rounded-full px-4 py-2 btn-outline btn transition-colors duration-200 ${
                     isActive
                       ? theme === "light"
                         ? "bg-blue-100 text-blue-700"
