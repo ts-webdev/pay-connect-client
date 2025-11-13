@@ -7,11 +7,14 @@ import SeeDetails from "../pages/SeeDetails";
 import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 import MyPayBills from "../pages/MyPayBills";
+import ErrorPage from "../pages/ErrorPage";
+import About from "../pages/About";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
@@ -43,6 +46,10 @@ export const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
+      {
+        path: "/about",
+        Component: About
+      }
     ],
   },
 ]);

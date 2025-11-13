@@ -1,8 +1,9 @@
-import React from "react";
+import React, { use } from "react";
 import { FaMobileAlt } from "react-icons/fa";
 import { MdOutlineNotifications, MdSecurity } from "react-icons/md";
 import { VscFilePdf } from "react-icons/vsc";
 import styled from "styled-components";
+import { AuthContext } from "../authContext/AuthContext";
 const StyledWrapper = styled.div`
   .card {
     height: 200px;
@@ -55,20 +56,21 @@ const StyledWrapper = styled.div`
 `;
 
 const WhyChoose = () => {
+  const {theme} = use(AuthContext)
   return (
-    <div className="relative bg-linear-to-b from-[#081c15] to-black">
+    <div className={`relative ${theme === "light"? "bg-white" : "bg-linear-to-b from-[#081c15] to-black"}`}>
       <div className="pointer-events-none absolute -bottom-30 right-50 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
-      <div className="container mx-auto py-28">
+      <div className="container mx-auto py-28 px-4 sm:px-0">
         <div className="flex justify-center">
           <h2 className="text-2xl  py-2 px-6 rounded-full bg-[#245501] text-white">
             Why Choose PayConnect?
           </h2>
         </div>
-        <p className="text-center mt-5 w-1/2 mx-auto text-lg">
+        <p className={`text-center mt-5 text-lg ${theme === "light"? "text-gray-600" : 'text-white'}`}>
           Experience the convenience of modern bill management with features
           designed for your peace of mind
         </p>
-        <div className="grid grid-cols-4 gap-7">
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-7">
           <StyledWrapper className="mt-10">
             <div className="card">
               <div className="card-inner">

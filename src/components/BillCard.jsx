@@ -18,6 +18,7 @@ const StyledWrapper = styled.div`
     box-shadow: 12px 12px 0 #132a13;
     transition: transform 0.3s, box-shadow 0.3s;
     display: flex;
+    
   }
 
   .card:hover {
@@ -176,7 +177,7 @@ const BillCard = ({ data }) => {
   };
   return (
     <StyledWrapper>
-      <div className="card h-[380px] overflow-hidden">
+      <div className="card h-[410px] overflow-hidden mx-4 sm:mx-0">
         <div className="">
           {data.category === "Electricity" && (
             <GiElectric

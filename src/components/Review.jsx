@@ -1,21 +1,23 @@
-import React from "react";
+import React, { use } from "react";
 import { FaBangladeshiTakaSign, FaPerson } from "react-icons/fa6";
 import { GoPerson } from "react-icons/go";
 import { RiCustomerService2Line, RiSecurePaymentLine } from "react-icons/ri";
+import { AuthContext } from "../authContext/AuthContext";
 
 const Review = () => {
+  const {theme} = use(AuthContext)
   return (
-    <div className="">
+    <div className={theme === "light"? "bg-[#245501]" : ""}>
       <div className="container mx-auto py-28">
         <div className="flex justify-center">
-          <h2 className="text-2xl  py-2 px-6 rounded-full bg-[#245501] text-white">
+          <h2 className={`text-2xl  py-2 px-6 rounded-full bg-[#245501] ${theme === "light"? "border-white border": ""} text-white`}>
            Trusted by Thousands
           </h2>
         </div>
         <p className="text-center mt-5 w-1/2 mx-auto text-lg">
          Join the growing community of users who have simplified their bill management.
         </p>
-        <div className="mt-15 flex justify-around">
+        <div className="mt-15 grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-10 lg:gap-0 justify-around">
             <div className="flex flex-col items-center gap-5">
                 <GoPerson size={70} className="bg-white text-black rounded-full p-4"/>
 

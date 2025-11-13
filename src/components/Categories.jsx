@@ -1,14 +1,14 @@
-import React from "react";
+import React, { use } from "react";
 import { FaFire, FaWifi } from "react-icons/fa";
 import { GiElectric } from "react-icons/gi";
 import { IoWaterOutline } from "react-icons/io5";
 import { RiFireLine } from "react-icons/ri";
 import { Link } from "react-router";
 import styled from "styled-components";
+import { AuthContext } from "../authContext/AuthContext";
 const StyledWrapper = styled.div`
   .parent {
-    width: 290px;
-    height: 300px;
+    height: 320px;
     perspective: 1000px;
   }
 
@@ -92,8 +92,9 @@ const StyledWrapper = styled.div`
 `;
 
 const Categories = () => {
+  const {theme} = use(AuthContext)
   return (
-    <div className="bg-linear-to-bl from-[#081c15] to-black relative">
+    <div className={theme === "light"? "bg-white relative" : "bg-linear-to-bl from-[#081c15] to-black relative"}>
       <div className="pointer-events-none absolute -bottom-90 -left-30 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
       <div className="py-28 container mx-auto">
         <div className="flex justify-center">
@@ -101,11 +102,11 @@ const Categories = () => {
             Categories
           </h2>
         </div>
-        <p className="text-center mt-5 text-lg">
+        <p className={`text-center mt-5 text-lg ${theme === "light"? "text-gray-600" : 'text-white'}`}>
           Manage all your essential utility services in one convenient location
         </p>
         {/* All Cards */}
-        <div className="mt-12 grid grid-cols-4 justify-around gap-20">
+        <div className="mt-12 grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:justify-around gap-5 px-4 sm:px-0 lg:gap-20">
           <Link to={'/bills'} className="cursor-pointer">
             <StyledWrapper>
             <div className="parent">

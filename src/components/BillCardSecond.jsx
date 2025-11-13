@@ -1,9 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import styled from "styled-components";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../authContext/AuthContext";
 const StyledWrapper = styled.div`
   .card {
     --card-bg: #ffffff;
@@ -289,14 +290,16 @@ const StyledWrapper = styled.div`
 `;
 
 const BillCardSecond = ({ billData }) => {
+  const {theme} = use(AuthContext)
   const navigate = useNavigate();
   const handleSeeDetails = (e) => {
     e.preventDefault();
     navigate(`/see-details/${billData._id}`);
   };
+
   return (
     <StyledWrapper>
-      <div className="card bg-linear-to-tl from-[#081c15]/50 to-[#1A4301]/50 h-[525px]">
+      <div className={`card h-[525px] ${ theme === "light" ? "bg-gray-500/20" : "bg-linear-to-tl from-[#081c15]/50 to-[#1A4301]/50"}`}>
         <div className="card__glow" />
         <div className="card__content">
           <div className="card__image card">
@@ -305,32 +308,32 @@ const BillCardSecond = ({ billData }) => {
             </figure>
           </div>
           <div className="card__text flex-1">
-            <p className="card__title">{billData.title}</p>
+            <p className={` ${theme === "light"? "text-2xl font-bold" : "card__title"} `}>{billData.title}</p>
             <p className="card__description">
-              <span className="bg-primary p-1 px-3 rounded-full">
+              <span className={`bg-primary p-1 px-3 rounded-full text-white`}>
                 {billData.category}
               </span>
             </p>
-            <div className="space-y-3 mt-3">
-              <p className="text-[0.9em] text-white leading-relaxed font-light flex items-center gap-2">
+            <div className={`space-y-3 mt-3   ${theme === "light"? "text-black" : "text-white"}`}>
+              <p className="text-[0.9em] leading-relaxed font-light flex items-center gap-2">
                 <IoLocationSharp size={20} />
                 {billData.location}
               </p>
-              <p className="text-[0.9em] text-white leading-relaxed font-light flex items-center gap-2">
+              <p className="text-[0.9em] leading-relaxed font-light flex items-center gap-2">
                 <MdDateRange size={20} />
                 {billData.date}
               </p>
             </div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="card__price">
+            <div className={` ${theme === "light"? "text-xl font-bold" : "card__price"}`}>
               <span className="text-2xl">৳</span>
               {billData.amount}
             </div>
             <div className="">
               <form onSubmit={handleSeeDetails} className="card__form">
                 <button className="button">
-                  <p>Pay Bill</p>
+                  <p className={theme === "light" && 'text-black'}>Pay Bill</p>
                 </button>
               </form>
             </div>

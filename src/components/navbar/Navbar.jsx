@@ -1,28 +1,90 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
+import logo2 from "../../assets/logo2.png";
 import { Link, NavLink } from "react-router";
 import "./navbar.css";
 import { AuthContext } from "../../authContext/AuthContext";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const { user, logOut, theme, setTheme } = use(AuthContext);
+  const { user, logOut, theme, setTheme } = useContext(AuthContext);
   const [isScrolled, setIsScrolled] = useState(false);
-  // links
+
+  // Scroll background change
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Theme handler
+  const handleTheme = (isChecked) => {
+    setTheme(isChecked ? "dark" : "light");
+  };
+
+  // Logout handler
+  const handleSignOut = () => {
+    logOut()
+      .then(() => toast.success("Successfully Logged Out"))
+      .catch((error) => console.error(error));
+  };
+
+  // Dynamic nav links
   const links = (
     <>
       <li>
-        <NavLink className={"rounded-full btn btn-ghost"} to={"/"}>
+        <NavLink
+          className={({ isActive }) =>
+            `rounded-full px-4 py-2 transition-colors duration-200 ${
+              isActive
+                ? theme === "light"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-blue-500/20 text-blue-300"
+                : theme === "light"
+                ? "hover:bg-gray-100 text-gray-700"
+                : "hover:bg-gray-800 text-gray-200"
+            }`
+          }
+          to="/"
+        >
           Home
         </NavLink>
       </li>
       <li>
-        <NavLink className={"rounded-full btn btn-ghost"} to={"/bills"}>
+        <NavLink
+          className={({ isActive }) =>
+            `rounded-full px-4 py-2 transition-colors duration-200 ${
+              isActive
+                ? theme === "light"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-blue-500/20 text-blue-300"
+                : theme === "light"
+                ? "hover:bg-gray-100 text-gray-700"
+                : "hover:bg-gray-800 text-gray-200"
+            }`
+          }
+          to="/bills"
+        >
           Bills
         </NavLink>
       </li>
       <li>
-        <NavLink className={"rounded-full btn btn-ghost"} to={"/about"}>
+        <NavLink
+          className={({ isActive }) =>
+            `rounded-full px-4 py-2 transition-colors duration-200 ${
+              isActive
+                ? theme === "light"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-blue-500/20 text-blue-300"
+                : theme === "light"
+                ? "hover:bg-gray-100 text-gray-700"
+                : "hover:bg-gray-800 text-gray-200"
+            }`
+          }
+          to="/about"
+        >
           About Us
         </NavLink>
       </li>
@@ -30,16 +92,36 @@ const Navbar = () => {
         <>
           <li>
             <NavLink
-              className={"rounded-full btn btn-ghost"}
-              to={"/my-pay-bills"}
+              className={({ isActive }) =>
+                `rounded-full px-4 py-2 transition-colors duration-200 ${
+                  isActive
+                    ? theme === "light"
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-blue-500/20 text-blue-300"
+                    : theme === "light"
+                    ? "hover:bg-gray-100 text-gray-700"
+                    : "hover:bg-gray-800 text-gray-200"
+                }`
+              }
+              to="/my-pay-bills"
             >
               My Pay Bills
             </NavLink>
           </li>
           <li>
             <NavLink
-              className={"rounded-full btn btn-ghost"}
-              to={"/profile"}
+              className={({ isActive }) =>
+                `rounded-full px-4 py-2 transition-colors duration-200 ${
+                  isActive
+                    ? theme === "light"
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-blue-500/20 text-blue-300"
+                    : theme === "light"
+                    ? "hover:bg-gray-100 text-gray-700"
+                    : "hover:bg-gray-800 text-gray-200"
+                }`
+              }
+              to="/profile"
             >
               My Profile
             </NavLink>
@@ -49,135 +131,141 @@ const Navbar = () => {
     </>
   );
 
-  // Set Scrolled
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // handle theme change
-  const handleTheme = (isChecked) => {
-    setTheme(isChecked ? "dark" : "light");
-  };
-
-  const handleSignOut = () => {
-    logOut()
-      .then(() => {
-        toast.success("Successfully Logout ");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
-    <div className={`sticky top-0 z-100 pt-5`}>
+    <div className="sticky top-0 z-100 pt-5 px-4 sm:px-0">
       <div
-        className={`navbar container  mx-auto px-5 rounded-full transition-all duration-300 ${
+        className={`navbar container mx-auto px-4 rounded-full transition-all duration-300 ease-in-out ${
           isScrolled
-            ? "bg-black/40 rounded-full backdrop-blur-md shadow-lg"
+            ? theme === "light"
+              ? "bg-white/60 backdrop-blur-md border border-gray-200 shadow-md"
+              : "bg-green-950/30 backdrop-blur-md shadow-lg"
             : "bg-transparent"
         }`}
       >
-        <div className="navbar-start">
+        {/* Navbar Start */}
+        <div className="navbar-start w-[20%]">
+          {/* Mobile Menu */}
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                />
               </svg>
             </div>
             <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              tabIndex={0}
+              className={`menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow border transition-all duration-200 ${
+                theme === "light"
+                  ? "bg-white border-gray-200 text-gray-700"
+                  : "bg-gray-900 border-gray-700 text-white"
+              }`}
             >
               {links}
             </ul>
           </div>
-          {/* logo */}
+
+          {/* Logo */}
           <Link
-            to={"/"}
+            to="/"
             className="text-3xl flex items-end font-bold cursor-pointer -ml-3"
           >
-            <img className="h-10" src={logo} alt="" />
-            <span className="-ml-1.5">ayConnect</span>
+            <img className="h-10" src={theme ==="light" ? logo2 : logo} alt="logo" />
+            <span
+              className={`-ml-1.5 ${
+                theme === "light" ? "text-gray-800" : "text-white"
+              }`}
+            >
+              ayConnect
+            </span>
           </Link>
         </div>
-        <div className="navbar-end">
+
+        {/* Navbar End */}
+        <div className="navbar-end w-[80%] ">
           <ul className="menu menu-horizontal px-1 hidden lg:flex gap-3">
             {links}
           </ul>
 
           {user ? (
-            <Link
+            <button
               onClick={handleSignOut}
-              className="btn btn-outline ml-2 rounded-full"
+              className={`ml-3 rounded-full px-5 py-2 font-medium transition-colors duration-200 ${
+                theme === "light"
+                  ? "border border-gray-300 text-gray-700 hover:bg-gray-100"
+                  : "border border-gray-600 text-white hover:bg-gray-800"
+              }`}
             >
               Logout
-            </Link>
+            </button>
           ) : (
-            <div>
+            <div className="flex items-center">
               <NavLink
-                to={"/login"}
-                className="btn btn-outline border-none rounded-full"
+                to="/login"
+                className={`rounded-full px-5 py-2 transition-colors duration-200 ${
+                  theme === "light"
+                    ? "border border-gray-300 text-gray-700 hover:bg-gray-100"
+                    : "border border-gray-600 text-white hover:bg-gray-800"
+                }`}
               >
                 Login
               </NavLink>
               <NavLink
-                to={"register"}
-                className="btn btn-outline rounded-full ml-3"
+                to="/register"
+                className={`ml-3 rounded-full px-5 py-2 transition-colors duration-200 ${
+                  theme === "light"
+                    ? "border border-blue-300 text-blue-600 hover:bg-blue-50"
+                    : "border border-blue-500 text-blue-400 hover:bg-blue-500/20"
+                }`}
               >
                 Register
               </NavLink>
             </div>
           )}
+
+          {/* User Avatar */}
           {user && (
-            <div title={user.displayName} className="avatar avatar-online ">
-              <div className="w-11 ml-3 rounded-full ring-primary ring-2">
-                <img src={user.photoURL} />
+            <div title={user.displayName} className="avatar avatar-online ml-3">
+              <div
+                className={`w-11 rounded-full ring-2 ${
+                  theme === "light"
+                    ? "ring-blue-500"
+                    : "ring-primary ring-offset-1 ring-offset-black"
+                }`}
+              >
+                <img src={user.photoURL} alt="user" />
               </div>
             </div>
           )}
-          <label className="swap swap-rotate ml-3">
-            {/* this hidden checkbox controls the state */}
+
+          {/* Theme Toggle */}
+          <label className="hidden sm:grid swap swap-rotate ml-3 cursor-pointer">
             <input
               onChange={(e) => handleTheme(e.target.checked)}
               type="checkbox"
-              className="theme-controller mr-10"
+              className="theme-controller"
               defaultChecked={theme === "dark"}
             />
-
-            {/* sun icon */}
+            {/* Sun icon */}
             <svg
-              className="swap-off h-8 w-8 fill-current"
+              className="swap-off h-10 w-8 fill-gray-600"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
               <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
             </svg>
-
-            {/* moon icon */}
+            {/* Moon icon */}
             <svg
-              className="swap-on h-8 w-8 fill-current"
+              className="swap-on h-10 w-8 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >

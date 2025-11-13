@@ -8,11 +8,13 @@ import {
 } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../authContext/AuthContext";
+import Lottie from "lottie-react";
+import loader from "../assets/load.json"
 
 const MyPayBills = () => {
   const [myBills, setMyBills] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = use(AuthContext);
+  const { user, theme } = use(AuthContext);
   const modalRef = useRef(null);
   const [updateProductInfo, setUpdateProductInfo] = useState({});
 
@@ -22,11 +24,14 @@ const MyPayBills = () => {
     if (isNaN(date)) return "";
     return date.toISOString().split("T")[0];
   };
-
   // Fetch user's paid bills
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/my-bills?email=${user.email}`)
+    fetch(`http://localhost:3000/my-bills?email=${user.email}`,{
+      headers:{
+        authorization : `Bearer ${user.accessToken}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
         setMyBills(data);
@@ -45,8 +50,8 @@ const MyPayBills = () => {
   // Loading spinner
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      <div className="flex justify-center items-center">
+        <Lottie animationData={loader} className="w-52 sm:w-64 md:w-72" />
       </div>
     );
   }
@@ -132,57 +137,58 @@ const MyPayBills = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#081c15] to-black -mt-23 py-28">
+    <div className={`min-h-screen ${theme === "light" ? "bg-gray-100" : "bg-gradient-to-b from-[#081c15] to-black"} -mt-23 py-28`}>
+      <title>PayConnect | My Pay Bills</title>
       <div className="container mx-auto px-4">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
+          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === "light" ? "text-gray-800" : "text-white"}`}>
             My Paid Bills
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className={`text-lg max-w-2xl mx-auto ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
             View and manage all your paid utility bills in one place
           </p>
         </div>
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white/20 rounded-2xl p-6 shadow-lg border border-green-100 dark:border-green-900">
+          <div className={`rounded-2xl p-6 shadow-lg border ${theme === "light" ? "bg-white border-blue-100" : "bg-white/20 border-green-900"}`}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                   Total Bills Paid
                 </p>
-                <p className="text-3xl font-bold text-gray-800 dark:text-white">
+                <p className={`text-3xl font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
                   {totalBills}
                 </p>
               </div>
-              <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
-                <FaReceipt className="text-2xl text-blue-600 dark:text-blue-400" />
+              <div className={`p-3 rounded-full ${theme === "light" ? "bg-blue-100" : "bg-blue-900"}`}>
+                <FaReceipt className={`text-2xl ${theme === "light" ? "text-blue-600" : "text-blue-400"}`} />
               </div>
             </div>
           </div>
 
-          <div className="bg-white/20 rounded-2xl p-6 shadow-lg border border-green-100 dark:border-green-900">
+          <div className={`rounded-2xl p-6 shadow-lg border ${theme === "light" ? "bg-white border-green-100" : "bg-white/20 border-green-900"}`}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                   Total Amount Paid
                 </p>
-                <p className="text-3xl font-bold text-gray-800 dark:text-white">
+                <p className={`text-3xl font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
                   ৳ {totalAmount}
                 </p>
               </div>
-              <div className="bg-green-100 dark:bg-green-900 p-3 px-5 rounded-full">
-                <span className="text-2xl text-green-600 dark:text-green-400">
+              <div className={`p-3 px-5 rounded-full ${theme === "light" ? "bg-green-100" : "bg-green-900"}`}>
+                <span className={`text-2xl ${theme === "light" ? "text-green-600" : "text-green-400"}`}>
                   ৳
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white/20 rounded-2xl p-6 shadow-lg border border-green-100 dark:border-green-900">
+          <div className={`rounded-2xl p-6 shadow-lg border ${theme === "light" ? "bg-white border-purple-100" : "bg-white/20 border-green-900"}`}>
             <div className="flex justify-between items-center gap-4">
-              <p className="text-gray-500 dark:text-gray-400 text-lg">
+              <p className={`text-lg ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                 Download Report:
               </p>
               {/* Download Report Button */}
@@ -195,63 +201,63 @@ const MyPayBills = () => {
         </div>
 
         {/* Bills Table */}
-        <div className="bg-white/10 rounded-2xl shadow-lg overflow-hidden">
+        <div className={`rounded-2xl shadow-lg overflow-hidden ${theme === "light" ? "bg-white" : "bg-white/10"}`}>
           {
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50/20">
+                <thead className={theme === "light" ? "bg-gray-50" : "bg-gray-50/20"}>
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
                       User Details
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
                       <span className="ml-2">Category</span>
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
                       Amount
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
                       Pay Date
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+                <tbody className={`divide-y ${theme === "light" ? "divide-gray-200" : "divide-gray-600"}`}>
                   {myBills.map((bill) => (
                     <tr
                       key={bill.billsId}
-                      className="hover:bg-green-500/7 transition-colors"
+                      className={theme === "light" ? "hover:bg-gray-50 transition-colors" : "hover:bg-green-500/7 transition-colors"}
                     >
                       <td className="px-6 py-4">
                         <div>
-                          <p className="font-medium text-gray-900 dark:text-white">
+                          <p className={`font-medium ${theme === "light" ? "text-gray-900" : "text-white"}`}>
                             {bill.username}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                             {bill.email}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                             {bill.phone}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                             {bill.address}
                           </p>
                         </div>
                       </td>
                       <td className="px-6 py-4 ">
-                        <span className="bg-primary p-2 px-6 text-md rounded-full">
+                        <span className={`p-2 px-6 text-md rounded-full ${theme === "light" ? "bg-blue-100 text-blue-800" : "bg-primary"}`}>
                           {bill.category}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                        <p className={`text-lg font-semibold ${theme === "light" ? "text-gray-900" : "text-white"}`}>
                           ৳ {bill.amount}
                         </p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-md text-gray-500 dark:text-gray-400">
+                        <p className={`text-md ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
                           {bill.date}
                         </p>
                       </td>
@@ -283,14 +289,13 @@ const MyPayBills = () => {
       </div>
 
       {/* Modal */}
-
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box bg-linear-to-tl from-[#081c15] to-[#102c00]/50">
-          <h2 className="text-4xl text-center py-3 font-bold">
+        <div className={`modal-box ${theme === "light" ? "bg-white" : "bg-gradient-to-tl from-[#081c15] to-[#102c00]/50"}`}>
+          <h2 className={`text-4xl text-center py-3 font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
             Update Bill Details
           </h2>
           <form onSubmit={handleUpdateData} className="space-y-3 w-full">
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Amount (Taka)<span className="text-error -ml-1">*</span>:
               <input
                 name="amount"
@@ -306,12 +311,12 @@ const MyPayBills = () => {
                   }
                 }}
                 placeholder="Enter Amount"
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 required
               />
             </label>
 
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Address<span className="text-error -ml-1">*</span>:
               <input
                 name="address"
@@ -324,12 +329,12 @@ const MyPayBills = () => {
                   })
                 }
                 placeholder="Enter Your Address"
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 required
               />
             </label>
 
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Phone<span className="text-error -ml-1">*</span>:
               <input
                 name="phone"
@@ -342,12 +347,12 @@ const MyPayBills = () => {
                   })
                 }
                 placeholder="Enter Your Phone Number"
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 required
               />
             </label>
 
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Date:<span className="text-error -ml-1">*</span>
               <input
                 name="date"
@@ -359,7 +364,7 @@ const MyPayBills = () => {
                     date: e.target.value,
                   })
                 }
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 required
               />
             </label>

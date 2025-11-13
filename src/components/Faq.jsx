@@ -1,18 +1,20 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../authContext/AuthContext";
 
 const Faq = () => {
+  const {theme } = use(AuthContext)
   return (
-    <div className="bg-linear-to-br from-[#081c15] to-black">
+    <div className={theme === "light" ? "bg-white" : "bg-linear-to-br from-[#081c15] to-black"}>
       <div className="py-28 container w-9/12 mx-auto">
         <div className="flex justify-center ">
           <h2 className="text-2xl  py-2 px-6 rounded-full bg-[#245501] text-white">
             FAQ
           </h2>
         </div>
-        <p className="text-center mt-5 text-lg">
+        <p className={`text-center mt-5 text-lg ${theme === "light"? "text-gray-600" : 'text-white'}`}>
           Got Questions? We’ve Got Answers.
         </p>
-        <div className="mt-10">
+        <div className={theme === "light" ? "mt-10 text-black": "mt-10"}>
           <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
             <li>
               <div className="timeline-middle">
