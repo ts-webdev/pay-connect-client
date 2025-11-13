@@ -1,16 +1,50 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="https://img.icons8.com/fluency/96/electricity.png" alt="PayConnect Logo" width="100"/>
+</p>
 
-Currently, two official plugins are available:
+<h1 align="center">⚡ PayConnect — Utility Bill Management System</h1>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+  A modern MERN stack web application for managing and paying monthly utility bills with ease.
+  <br />
+  <a href="https://pay-connect-b25b0.web.app/"><strong>🌐 Live Site →</strong></a>
+  <br />
+  <br />
+  <img src="https://img.shields.io/badge/Build-Vite-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Tailwind-orange?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Backend-MongoDB%20%7C%20Express-green?style=flat-square"/>
+  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square"/>
+</p>
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📘 Overview
 
-## Expanding the ESLint configuration
+**PayConnect** is a full-featured **Utility Bill Management System** built on the **MERN stack**, designed to make managing monthly bills simple, secure, and transparent.  
+It allows users to **view, pay, update**, and **download reports** of their utility bills (Electricity, Gas, Water, Internet.) — all from one responsive dashboard.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ Core Features
+
+- 🔐 **Secure Authentication** — User registration and login powered by **Firebase Auth**.
+- 💸 **Monthly Bill Payments** — Pay only the current month's bills securely and efficiently.
+- 🧾 **PDF Report Generation** — Generate and download PDF summaries for all paid bills.
+- 🔍 **Smart Search & Filtering** — Instantly find any bill by month, category, or status.
+- 📱 **Responsive & Interactive UI** — Clean and adaptive design using **TailwindCSS**, **Framer Motion**, and **DaisyUI**.
+- 💬 **Real-time Feedback** — Get instant notifications and alerts via **React Hot Toast** and **SweetAlert2**.
+
+---
+
+## 🧩 Tech Stack
+
+| Category | Technologies Used |
+|-----------|------------------|
+| **Frontend** | React 19, Vite, Tailwind CSS, DaisyUI, Styled Components, Framer Motion |
+| **Backend** | Node.js, Express.js, MongoDB (Mongoose) |
+| **Authentication** | Firebase Authentication |
+| **Utilities** | jsPDF, jsPDF-Autotable, FileSaver, Lottie, Swiper, Lucide Icons |
+| **Deployment** | Firebase (Client), Vercel (Server) |
+
+---
