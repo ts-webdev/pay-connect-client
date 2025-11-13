@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import "./navbar.css";
@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logOut, theme, setTheme } = use(AuthContext);
-
+  const [isScrolled, setIsScrolled] = useState(false);
   // links
   const links = (
     <>
@@ -21,15 +21,48 @@ const Navbar = () => {
           Bills
         </NavLink>
       </li>
+      <li>
+        <NavLink className={"rounded-full btn btn-ghost"} to={"/about"}>
+          About Us
+        </NavLink>
+      </li>
       {user && (
-        <li>
-          <NavLink className={"rounded-full btn btn-ghost"} to={"/my-pay-bills"}>
-            My Pay Bills
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink
+              className={"rounded-full btn btn-ghost"}
+              to={"/my-pay-bills"}
+            >
+              My Pay Bills
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={"rounded-full btn btn-ghost"}
+              to={"/profile"}
+            >
+              My Profile
+            </NavLink>
+          </li>
+        </>
       )}
     </>
   );
+
+  // Set Scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // handle theme change
   const handleTheme = (isChecked) => {
@@ -39,15 +72,21 @@ const Navbar = () => {
   const handleSignOut = () => {
     logOut()
       .then(() => {
-        toast.success("Successfully Logout ")
+        toast.success("Successfully Logout ");
       })
       .catch((error) => {
         console.log(error);
       });
   };
   return (
-    <div className="sticky top-0 z-100 pt-5 ">
-      <div className="navbar container  mx-auto">
+    <div className={`sticky top-0 z-100 pt-5`}>
+      <div
+        className={`navbar container  mx-auto px-5 rounded-full transition-all duration-300 ${
+          isScrolled
+            ? "bg-black/40 rounded-full backdrop-blur-md shadow-lg"
+            : "bg-transparent"
+        }`}
+      >
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -97,7 +136,10 @@ const Navbar = () => {
             </Link>
           ) : (
             <div>
-              <NavLink to={"/login"} className="btn btn-outline border-none rounded-full">
+              <NavLink
+                to={"/login"}
+                className="btn btn-outline border-none rounded-full"
+              >
                 Login
               </NavLink>
               <NavLink

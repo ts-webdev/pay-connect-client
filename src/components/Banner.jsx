@@ -6,7 +6,10 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import payBill from "../assets/paybill.png";
+import easy from "../assets/easy.png"
+import secure from "../assets/secure.png"
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 
 const StyledWrapper = styled.div`
   .button {
@@ -74,6 +77,16 @@ const StyledWrapper = styled.div`
 `;
 
 const Banner = () => {
+  const navigate = useNavigate();
+
+  const handleAllBills = () => {
+    navigate("/bills");
+  };
+
+  const handleAboutButton = ()=>{
+    navigate("/about");
+  }
+
   return (
     <section className="w-full h-screen relative bg-black mb-5 overflow-hidden -mt-24">
       <DotBackground></DotBackground>
@@ -103,13 +116,13 @@ const Banner = () => {
                     management system
                   </p>
                   <StyledWrapper className="mt-5">
-                    <button className="button">
-                      <p>Pay Bill</p>
+                    <button onClick={handleAllBills} className="button">
+                      <p>All Bills</p>
                     </button>
                   </StyledWrapper>
                 </div>
                 <div className=" animate-bounce slow-bounce mt-40">
-                  <img src={payBill} alt="" />
+                  <img className="max-w-[600px]" src={payBill} alt="" />
                 </div>
               </div>
             </SwiperSlide>
@@ -117,20 +130,40 @@ const Banner = () => {
               <div className="text-left flex justify-between items-center  h-screen px-30">
                 <div className=" w-1/2">
                   <h1 className="text-6xl font-black mb-5">
-                    Manage All Your Utility Bills in One Place
+                    Bill Management Made Easy
+
                   </h1>
                   <p>
-                    Simplify your monthly payments with our comprehensive bill
-                    management system
+                    One Place for Electricity, Gas, Water, and Internet.
                   </p>
-                  <StyledWrapper className="mt-5">
+                  <StyledWrapper onClick={handleAboutButton} className="mt-5">
                     <button className="button">
-                      <p>Pay Bill</p>
+                      <p>About Us</p>
                     </button>
                   </StyledWrapper>
                 </div>
                 <div className=" animate-bounce slow-bounce mt-40">
-                  <img src={payBill} alt="" />
+                  <img className="max-w-[600px]" src={easy} alt="" />
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="text-left flex justify-between items-center  h-screen px-30">
+                <div className=" w-1/2">
+                  <h1 className="text-6xl font-black mb-5">
+                   Secure and Reliable Bill Tracking
+                  </h1>
+                  <p>
+                   Your financial data is protected with enterprise-grade security
+                  </p>
+                  <StyledWrapper onClick={handleAboutButton} className="mt-5">
+                    <button className="button">
+                      <p>Learn More</p>
+                    </button>
+                  </StyledWrapper>
+                </div>
+                <div className=" animate-bounce slow-bounce mt-40">
+                  <img className="max-w-[500px]" src={secure} alt="" />
                 </div>
               </div>
             </SwiperSlide>

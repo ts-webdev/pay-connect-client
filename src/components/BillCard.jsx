@@ -169,7 +169,6 @@ const StyledWrapper = styled.div`
 `;
 
 const BillCard = ({ data }) => {
-  console.log(data);
   const navigate = useNavigate();
   const handleSeeDetails = (e) => {
     e.preventDefault();
@@ -230,10 +229,9 @@ const BillCard = ({ data }) => {
         <div>
           <form onSubmit={handleSeeDetails} className="card__form">
             <button className="button">
-                    <p>Pay Bill</p>
-                  </button>
+              <p>Pay Bill</p>
+            </button>
           </form>
-          
         </div>
       </div>
     </StyledWrapper>

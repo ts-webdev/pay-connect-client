@@ -19,17 +19,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "/bills",
-        Component: Bills
+        Component: Bills,
       },
       {
         path: "/see-details/:id",
-        element: <PrivateRoute>
-          <SeeDetails></SeeDetails>
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <SeeDetails></SeeDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-pay-bills",
-        Component: MyPayBills
+        element: <PrivateRoute>
+          <MyPayBills></MyPayBills>
+        </PrivateRoute>
       },
       {
         path: "/login",

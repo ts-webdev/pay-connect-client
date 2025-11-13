@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, useParams } from "react-router";
 import {
@@ -14,6 +14,7 @@ import { FiDownload, FiShare2 } from "react-icons/fi";
 import Lottie from "lottie-react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
+import { AuthContext } from "../authContext/AuthContext";
 
 const StyledWrapper = styled.div`
   .button {
@@ -85,6 +86,8 @@ const SeeDetails = () => {
   const modalRef = useRef(null);
   const [data, setData] = useState([]);
   const [isCurrentMonth, setIsCurrentMonth] = useState(true);
+  const {user} = use(AuthContext)
+
   // modal
   const handlePayBill = () => {
     modalRef.current.showModal();
@@ -100,7 +103,7 @@ const SeeDetails = () => {
         const billDate = data.date;
         const billMonth = Number(billDate.split("-")[1]);
         const date = new Date();
-        const month = date.getMonth();
+        const month = date.getMonth() + 1;
         if (billMonth === month) {
           setIsCurrentMonth(true);
         } else {
@@ -120,30 +123,29 @@ const SeeDetails = () => {
       email: e.target.email.value,
       amount: e.target.amount.value,
       date: e.target.date.value,
-      category: data.category
+      category: data.category,
     };
-    
+
     fetch("http://localhost:3000/my-bills", {
       method: "POST",
-      headers:{
-        "content-type" : "application/json"
+      headers: {
+        "content-type": "application/json",
       },
-      body: JSON.stringify(payDetails)
+      body: JSON.stringify(payDetails),
     })
-    .then(res=> res.json())
-    .then(data=>{
-      console.log("Data After Saving Mongodb:",data)
-      if(data.insertedId){
-        toast.success("Payment Successful! 🎉")
-        modalRef.current.close()
-      }
-
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Data After Saving Mongodb:", data);
+        if (data.insertedId) {
+          toast.success("Payment Successful! 🎉");
+          modalRef.current.close();
+        }
+      });
   };
 
   return (
     <div className="bg-linear-to-b from-[#081c15] to-black ">
-      <title>PayConnect | Monthly electricity Bill</title>
+      <title>{`PayConnect | ${data.title}`}</title>
       <div className="-mt-24 pt-35 pb-28 container mx-auto">
         <div className="flex items-center gap-3">
           <Link className="hover:text-gray-300" to={"/"}>
@@ -162,7 +164,9 @@ const SeeDetails = () => {
         <div className="card bg-black/20 shadow-md border mx-auto mt-10 p-10">
           <div className="flex">
             {/* Left side Image */}
-            <div className="w-100 h-70 rounded-2xl bg-white"></div>
+            <div className="w-100 h-60 rounded-2xl bg-white">
+              <img className="rounded-2xl" src={data.image} alt="" />
+            </div>
 
             {/* Right Side Details */}
             <div className="card-body">
@@ -240,13 +244,14 @@ const SeeDetails = () => {
       {/* Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-linear-to-tl from-[#081c15] to-[#102c00]/50">
-          <form  onSubmit={handlePayNow} className="space-y-3  w-full">
+        <h2 className="text-4xl text-center py-3 font-bold">Let’s Settle This Bill!</h2>
+          <form onSubmit={handlePayNow} className="space-y-3  w-full">
             <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
               Email:
               <input
                 name="email"
                 type="email"
-                defaultValue={data.email}
+                defaultValue={user.email}
                 className="grow bg-none outline-none text-white"
                 readOnly
               />
@@ -313,7 +318,6 @@ const SeeDetails = () => {
             </label>
 
             <button
-             
               type="submit"
               className="btn w-full btn-primary text-white  rounded-sm font-semibold mt-2"
             >

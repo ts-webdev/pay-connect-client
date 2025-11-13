@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import imgE from "../assets/electricity1.jpg";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
@@ -103,6 +102,7 @@ const StyledWrapper = styled.div`
   .card__description {
     font-size: 1em;
     margin: 0;
+    margin-top: 7px;
     opacity: 0.7;
     transition: all 0.3s ease;
   }
@@ -120,19 +120,7 @@ const StyledWrapper = styled.div`
     transition: all 0.3s ease;
   }
 
-  .card__button {
-    width: 28px;
-    height: 28px;
-    background: var(--card-accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    transform: scale(0.9);
-  }
+  
 
   /* Hover Effects */
   .card:hover {
@@ -190,9 +178,9 @@ const StyledWrapper = styled.div`
   .card:active {
     transform: translateY(-5px) scale(0.98);
   }
-    .card__form {
+  .card__form {
     display: flex;
-    flex-direction: column;
+    justify-content: end;
     gap: 15px;
   }
 
@@ -211,47 +199,71 @@ const StyledWrapper = styled.div`
     background-color: #000;
     color: #ffffff;
   }
+  
 
-  .card__button {
-    background: #538D22;
-    border-radius: 5px;
-    color: #fff;
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-    width: 100%;
-    height: 100%;
-  }
-
-  .card__button::before {
-    content: "Sure?";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 105%;
-    background-color: #1A4301;
-    color: #fff;
+  .button {
+    all: unset;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transform: translateY(100%);
-    transition: transform 0.3s;
+    position: relative;
+    padding: 0.6em 2em;
+    border: #245501 solid 0.15em;
+    border-radius: 0.25em;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border 300ms, color 300ms;
+    user-select: none;
   }
 
-  .card__button:hover::before {
-    transform: translateY(0);
+  .button p {
+    z-index: 1;
   }
 
-  .card__button:active {
-    transform: scale(0.95);
+  .button:hover {
+    color: #dad7cd;
   }
 
+  .button:active {
+    border-color: teal;
+  }
+
+  .button::after,
+  .button::before {
+    content: "";
+    position: absolute;
+    width: 9em;
+    aspect-ratio: 1;
+    background: #245501;
+    opacity: 50%;
+    border-radius: 50%;
+    transition: transform 500ms, background 300ms;
+  }
+
+  .button::before {
+    left: 0;
+    transform: translateX(-8em);
+  }
+
+  .button::after {
+    right: 0;
+    transform: translateX(8em);
+  }
+
+  .button:hover:before {
+    transform: translateX(-1em);
+  }
+
+  .button:hover:after {
+    transform: translateX(1em);
+  }
+
+  .button:active:before,
+  .button:active:after {
+    background: teal;
+  }
+  
 
   /* Animations */
   @keyframes shine {
@@ -276,27 +288,33 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const BillCardSecond = ({billData}) => {
-    const navigate = useNavigate();
-  const handleSeeDetails = (e)=>{
+const BillCardSecond = ({ billData }) => {
+  const navigate = useNavigate();
+  const handleSeeDetails = (e) => {
     e.preventDefault();
     navigate(`/see-details/${billData._id}`);
-  }
+  };
   return (
     <StyledWrapper>
-      <div className="card bg-linear-to-tl from-[#081c15]/70 to-[#1A4301]/70 h-[525px]">
+      <div className="card bg-linear-to-tl from-[#081c15]/50 to-[#1A4301]/50 h-[525px]">
         <div className="card__glow" />
         <div className="card__content">
-          <div className="card__image">
-            <img src={imgE} alt="" />
+          <div className="card__image card">
+            <figure>
+              <img src={billData.image} alt="" />
+            </figure>
           </div>
           <div className="card__text flex-1">
             <p className="card__title">{billData.title}</p>
-            <p className="card__description">{billData.category}</p>
+            <p className="card__description">
+              <span className="bg-primary p-1 px-3 rounded-full">
+                {billData.category}
+              </span>
+            </p>
             <div className="space-y-3 mt-3">
               <p className="text-[0.9em] text-white leading-relaxed font-light flex items-center gap-2">
                 <IoLocationSharp size={20} />
-               {billData.location}
+                {billData.location}
               </p>
               <p className="text-[0.9em] text-white leading-relaxed font-light flex items-center gap-2">
                 <MdDateRange size={20} />
@@ -305,10 +323,15 @@ const BillCardSecond = ({billData}) => {
             </div>
           </div>
           <div className="grid grid-cols-2">
-            <div className="card__price"><span className="text-2xl">৳</span>{billData.amount}</div>
+            <div className="card__price">
+              <span className="text-2xl">৳</span>
+              {billData.amount}
+            </div>
             <div className="">
               <form onSubmit={handleSeeDetails} className="card__form">
-                <button className="card__button">See Details</button>
+                <button className="button">
+                  <p>Pay Bill</p>
+                </button>
               </form>
             </div>
           </div>

@@ -25,11 +25,12 @@ const Footer = () => {
         </aside>
         <aside className="flex justify-between  col-span-3">
           <nav className="flex flex-col space-y-2">
-            <h6 className="footer-title text-lg">Services</h6>
-            <a className="link link-hover font-light">Branding</a>
-            <a className="link link-hover font-light">Design</a>
-            <a className="link link-hover font-light">Marketing</a>
-            <a className="link link-hover font-light">Advertisement</a>
+            <h6 className="footer-title text-lg">Useful Links</h6>
+            <Link to={"/"} className="link link-hover font-light">Home</Link>
+            <Link to={"/bills"} className="link link-hover font-light">Bills</Link>
+            <Link to={"/my-pay-bills"} className="link link-hover font-light">My Pay Bills</Link>
+            <Link to={"/profile"} className="link link-hover font-light">My Profile</Link>
+            <Link to={"/about"} className="link link-hover font-light">About Us</Link>
           </nav>
           <nav className="flex flex-col space-y-2">
             <h6 className="footer-title text-lg">Legal</h6>

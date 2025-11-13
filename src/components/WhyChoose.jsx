@@ -92,12 +92,11 @@ const WhyChoose = () => {
                 <div className="card-front flex flex-col gap-5">
                   <MdOutlineNotifications size={50} />
 
-                  <p>Smart Reminders</p>
+                  <p>Easy Management</p>
                 </div>
                 <div className="card-back p-5">
                   <p className="text-sm">
-                    Never miss a due date with intelligent notifications and
-                    payment reminders.
+                    One Place for Electricity, Gas, Water, and Internet.
                   </p>
                 </div>
               </div>
