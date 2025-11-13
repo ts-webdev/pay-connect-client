@@ -8,7 +8,6 @@ import { AuthContext } from "../authContext/AuthContext";
 
 const ErrorPage = () => {
   const { theme } = use(AuthContext);
-  console.log(theme);
   return (
     <div className={theme ==="light" ? "bg-white": "bg-linear-to-b from-[#081c15] to-black" }>
       <Navbar></Navbar>

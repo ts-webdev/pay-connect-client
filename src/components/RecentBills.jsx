@@ -6,12 +6,12 @@ const RecentBills = () => {
   const [recentData, setRecentData] = useState([])
   const {theme} = use(AuthContext)
   useEffect(()=>{
-    fetch("http://localhost:3000/bills/latest")
+    fetch("https://pay-connect-server.vercel.app/bills/latest")
     .then(res=> res.json())
     .then(data => setRecentData(data))
   },[])
   return (
-    <div className={theme === "light" ? "bg-gradient-to-br from-blue-50 to-indigo-100 py-28 px-4" : "py-28 bg-black px-4"}>
+    <div className={theme === "light" ? "bg-linear-to-br from-blue-50 to-indigo-100 py-28 px-4" : "py-28 bg-black px-4"}>
       <div className="container mx-auto">
         <div className="flex justify-center">
           <h2 className="text-2xl  py-2 px-6 rounded-full bg-[#245501] text-white">

@@ -95,7 +95,7 @@ const SeeDetails = () => {
 
   // fetch data
   useEffect(() => {
-    fetch(`http://localhost:3000/bills/${id}`)
+    fetch(`https://pay-connect-server.vercel.app/bills/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -126,7 +126,7 @@ const SeeDetails = () => {
       category: data.category,
     };
 
-    fetch("http://localhost:3000/my-bills", {
+    fetch("https://pay-connect-server.vercel.app/my-bills", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -135,7 +135,6 @@ const SeeDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Data After Saving Mongodb:", data);
         if (data.insertedId) {
           toast.success("Payment Successful! 🎉");
           modalRef.current.close();
@@ -149,7 +148,7 @@ const SeeDetails = () => {
   };
 
   return (
-    <div className={`min-h-screen -mt-24 ${theme === "light" ? "bg-gradient-to-br from-blue-50 to-indigo-100" : "bg-gradient-to-b from-[#081c15] to-black"}`}>
+    <div className={`min-h-screen -mt-24 ${theme === "light" ? "bg-linear-to-br from-blue-50 to-indigo-100" : "bg-linear-to-b from-[#081c15] to-black"}`}>
       <title>{`PayConnect | ${data.title}`}</title>
       <div className="pt-32 pb-20 container mx-auto px-4">
         {/* Breadcrumb */}
@@ -277,7 +276,7 @@ const SeeDetails = () => {
 
       {/* Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className={`modal-box ${theme === "light" ? "bg-white" : "bg-gradient-to-tl from-[#081c15] to-[#102c00]/50"}`}>
+        <div className={`modal-box ${theme === "light" ? "bg-white" : "bg-linear-to-tl from-[#081c15] to-[#102c00]/50"}`}>
           <h2 className={`text-3xl sm:text-4xl text-center py-3 font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
             Let's Settle This Bill!
           </h2>

@@ -94,7 +94,7 @@ const StyledWrapper = styled.div`
 const Categories = () => {
   const {theme} = use(AuthContext)
   return (
-    <div className={theme === "light"? "bg-gradient-to-br from-blue-50 to-indigo-100 relative" : "bg-linear-to-bl from-[#081c15] to-black relative"}>
+    <div className={theme === "light"? "bg-linear-to-br from-blue-50 to-indigo-100 relative" : "bg-linear-to-bl from-[#081c15] to-black relative"}>
       <div className="pointer-events-none absolute -bottom-90 -left-30 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
       <div className="py-28 container mx-auto">
         <div className="flex justify-center">

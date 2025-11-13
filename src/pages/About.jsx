@@ -35,7 +35,7 @@ const About = () => {
   ];
 
   return (
-    <div className={`min-h-screen ${theme ==="light" ? "bg-gradient-to-br from-blue-50 to-indigo-100" : "bg-gradient-to-r from-gray-900 to-green-900"} -mt-23 pt-10`}>
+    <div className={`min-h-screen ${theme ==="light" ? "bg-linear-to-br from-blue-50 to-indigo-100" : "bg-linear-to-r from-gray-900 to-green-900"} -mt-23 pt-10`}>
       <title>PayConnect | About Us</title>
       {/* Hero Section */}
       <section className="relative py-20 lg:py-28">

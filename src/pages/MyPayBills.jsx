@@ -23,7 +23,7 @@ const MyPayBills = () => {
   // Fetch user's paid bills
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/my-bills?email=${user.email}`, {
+    fetch(`https://pay-connect-server.vercel.app/my-bills?email=${user.email}`, {
       headers: {
         authorization: `Bearer ${user.accessToken}`,
       },
@@ -65,7 +65,7 @@ const MyPayBills = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/my-bills/${id}`, {
+        fetch(`https://pay-connect-server.vercel.app/my-bills/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -107,7 +107,7 @@ const MyPayBills = () => {
       date: e.target.date.value,
     };
 
-    fetch(`http://localhost:3000/my-bills/${updateProductInfo.billsId}`, {
+    fetch(`https://pay-connect-server.vercel.app/my-bills/${updateProductInfo.billsId}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -133,6 +133,7 @@ const MyPayBills = () => {
   };
 
   // -------------------------------------------------------------------------------------
+  
   // Download report as PDF
   const handleDownloadReport = () => {
     if (myBills.length === 0) {
@@ -197,7 +198,7 @@ const MyPayBills = () => {
       className={`min-h-screen ${
         theme === "light"
           ? "bg-gray-100"
-          : "bg-gradient-to-b from-[#081c15] to-black"
+          : "bg-linear-to-b from-[#081c15] to-black"
       } -mt-23 py-28`}
     >
       <title>PayConnect | My Pay Bills</title>
@@ -493,7 +494,7 @@ const MyPayBills = () => {
           className={`modal-box ${
             theme === "light"
               ? "bg-white"
-              : "bg-gradient-to-tl from-[#081c15] to-[#102c00]/50"
+              : "bg-linear-to-tl from-[#081c15] to-[#102c00]/50"
           }`}
         >
           <h2

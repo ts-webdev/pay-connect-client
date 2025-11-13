@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { IoCreateOutline, IoPerson } from "react-icons/io5";
 import { IoMdPhotos } from "react-icons/io";
 import toast from "react-hot-toast";
+import 'animate.css';
+
 
 const Register = () => {
   const { loginWithGoogle, createNewUser, updateUser, theme } = use(AuthContext);
@@ -45,8 +47,7 @@ const Register = () => {
 
     if (passwordError === "") {
       createNewUser(email, password)
-        .then((data) => {
-          console.log(data);
+        .then(() => {
           navigate(location.state || "/");
           toast.success(
             "Congratulation, your account has been successfully created. "
@@ -71,8 +72,7 @@ const Register = () => {
   // Login With Google
   const handleGoogleLogin = () => {
     loginWithGoogle()
-      .then((data) => {
-        console.log(data.user);
+      .then(() => {
         navigate(location.state || "/");
         toast.success(`Welcome Back`);
       })
@@ -83,10 +83,10 @@ const Register = () => {
   };
 
   return (
-    <div className={`min-h-screen -mt-22 flex items-center justify-center py-8 ${theme === "light" ? "bg-gradient-to-br from-blue-50 to-indigo-100" : "bg-gradient-to-b from-[#081c15] to-black"}`}>
+    <div className={`min-h-screen -mt-22 flex items-center justify-center py-8 ${theme === "light" ? "bg-linear-to-br from-blue-50 to-indigo-100" : "bg-linear-to-b from-[#081c15] to-black"}`}>
       <title>PayConnect | Register</title>
       <div className="container mx-auto px-4">
-        <div className={`rounded-2xl w-full max-w-md mx-auto mt-20 p-6 sm:p-8 text-center border ${theme === "light" ? "bg-white border-gray-200 shadow-lg" : "bg-white/10 border-gray-500/20"}`}>
+        <div className={`animate__animated animate__bounceInUp rounded-2xl w-full max-w-md mx-auto mt-20 p-6 sm:p-8 text-center border ${theme === "light" ? "bg-white border-gray-200 shadow-lg" : "bg-white/10 border-gray-500/20"}`}>
           {/* Icon */}
           <div className="flex justify-center mb-4">
             <div className={`p-4 rounded-full ${theme === "light" ? "bg-blue-100" : "bg-gray-700"}`}>

@@ -3,6 +3,7 @@ import BillCardSecond from "../components/BillCardSecond";
 import Lottie from "lottie-react";
 import loader from "../assets/load.json";
 import { AuthContext } from "../authContext/AuthContext";
+import 'animate.css';
 
 const Bills = () => {
   const [billsData, setBillsData] = useState([]);
@@ -14,7 +15,7 @@ const Bills = () => {
   // Fetch Data
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/bills?sort=${sort}`)
+    fetch(`https://pay-connect-server.vercel.app/bills?sort=${sort}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch bills");
         return res.json();
@@ -47,7 +48,7 @@ const Bills = () => {
         <title>PayConnect | Bills</title>
 
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="animate__animated animate__fadeInUp text-center mb-12">
           <h1
             className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${
               theme === "light" ? "text-gray-900" : "text-white"
@@ -93,7 +94,7 @@ const Bills = () => {
         </div>
 
         {/* Dropdown Filter */}
-        <div className="flex justify-end mb-8">
+        <div className=" flex justify-end mb-8">
           <div className="dropdown dropdown-top dropdown-end">
             <div
               tabIndex={0}
@@ -214,25 +215,7 @@ const Bills = () => {
           </div>
         )}
       </div>
-
-      {/* Glass effect CSS for light theme */}
-      <style jsx>{`
-        .glass-card {
-          background: rgba(255, 255, 255, 0.25);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          border-radius: 16px;
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-          transition: all 0.3s ease;
-        }
-        
-        .glass-card:hover {
-          background: rgba(255, 255, 255, 0.35);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-          transform: translateY(-2px);
-        }
-      `}</style>
+ 
     </div>
   );
 };

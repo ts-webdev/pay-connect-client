@@ -58,7 +58,7 @@ const StyledWrapper = styled.div`
 const WhyChoose = () => {
   const {theme} = use(AuthContext)
   return (
-    <div className={`relative ${theme === "light"? "bg-gradient-to-br from-blue-50 to-indigo-100" : "bg-linear-to-b from-[#081c15] to-black"}`}>
+    <div className={`relative ${theme === "light"? "bg-linear-to-br from-blue-50 to-indigo-100" : "bg-linear-to-b from-[#081c15] to-black"}`}>
       <div className="pointer-events-none absolute -bottom-30 right-50 w-[70vw] sm:w-[z-500vw] md:w-[40vw] h-[70vw] sm:h-[z-500vw] md:h-[40vw] max-w-[300px] max-h-[300px] rounded-full bg-linear-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-30 sm:opacity-20 md:opacity-10 blur-[100px] sm:blur-[130px] md:blur-[150px] animate-pulse"></div>
       <div className="container mx-auto py-28 px-4 sm:px-0">
         <div className="flex justify-center">

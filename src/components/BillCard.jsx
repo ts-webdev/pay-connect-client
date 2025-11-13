@@ -10,6 +10,8 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import styled from "styled-components";
 
+
+
 const StyledWrapper = styled.div`
   .card {
     padding: 20px;
@@ -177,7 +179,7 @@ const BillCard = ({ data }) => {
   };
   return (
     <StyledWrapper>
-      <div className="card h-[410px] overflow-hidden mx-4 sm:mx-0">
+      <div className=" card h-[410px] overflow-hidden mx-4 sm:mx-0">
         <div className="">
           {data.category === "Electricity" && (
             <GiElectric
