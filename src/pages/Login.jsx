@@ -13,7 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { loginWithGoogle, loginUser } = use(AuthContext);
+  const { loginWithGoogle, loginUser, theme } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -48,75 +48,80 @@ const Login = () => {
         toast.error(errorMessage);
       });
   };
+
   return (
-    <div className="hero bg-linear-to-b from-[#081c15] to-black min-h-screen -mt-22">
+    <div className={`min-h-screen -mt-22 flex items-center justify-center py-8 ${theme === "light" ? "bg-gradient-to-br from-blue-50 to-indigo-100" : "bg-gradient-to-b from-[#081c15] to-black"}`}>
       <title>PayConnect | Login</title>
-      <div className="flex items-center justify-center p-4">
-        <div className="bg-white/10 rounded-xl w-full  p-8 text-center border border-gray-50/20">
+      <div className="container mx-auto px-4">
+        <div className={`rounded-2xl w-full max-w-md mx-auto mt-20 p-6 sm:p-8 text-center border ${theme === "light" ? "bg-white border-gray-200 shadow-lg" : "bg-white/10 border-gray-500/20"}`}>
           {/* Icon */}
           <div className="flex justify-center mb-4">
-            <div className="bg-gray-100 p-4 rounded-full">
-              <BiLogInCircle className="text-2xl text-gray-700" size={30} />
+            <div className={`p-4 rounded-full ${theme === "light" ? "bg-blue-100" : "bg-gray-700"}`}>
+              <BiLogInCircle className={`text-2xl ${theme === "light" ? "text-blue-600" : "text-white"}`} size={30} />
             </div>
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-semibold mb-1">Welcome Back!</h2>
-          <p className="text-gray-500 text-sm mb-6">
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-1 ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+            Welcome Back!
+          </h2>
+          <p className={`text-sm sm:text-base mb-6 ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
             Please enter your details to Login.
           </p>
 
           {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-3  w-xs">
-            <label className=" border-b border-gray-500 py-3 flex items-center gap-2">
-              <FaEnvelope className="text-gray-400" />
+          <form onSubmit={handleLogin} className="space-y-4 w-full">
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "border-gray-300" : "border-gray-500"}`}>
+              <FaEnvelope className={theme === "light" ? "text-gray-400" : "text-gray-300"} />
               <input
                 name="email"
                 type="email"
                 placeholder="Email"
-                className="grow bg-none  outline-none"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800 placeholder-gray-400" : "text-white placeholder-gray-400"}`}
                 required
               />
             </label>
 
-            <label className="border-b border-gray-500 py-3 flex items-center gap-2">
-              <FaLock className="text-gray-400" />
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "border-gray-300" : "border-gray-500"}`}>
+              <FaLock className={theme === "light" ? "text-gray-400" : "text-gray-300"} />
               <input
                 name="password"
                 type="password"
                 placeholder="Password"
-                className="grow bg-transparent outline-none"
+                className={`grow bg-transparent outline-none ${theme === "light" ? "text-gray-800 placeholder-gray-400" : "text-white placeholder-gray-400"}`}
                 required
               />
             </label>
 
             <div className="flex justify-end text-sm">
-              <a href="#" className="text-gray-500 hover:underline">
+              <a href="#" className={`hover:underline ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
                 Forgot password?
               </a>
             </div>
 
             <button
               type="submit"
-              className="btn w-full btn-primary text-white  rounded-full font-semibold mt-2"
+              className="btn w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold py-3 transition-colors"
             >
               Login
             </button>
           </form>
 
           {/* Divider */}
-          <div className="divider text-gray-400 my-6">Or sign in with</div>
+          <div className={`divider my-6 ${theme === "light" ? "text-gray-400" : "text-gray-500"}`}>
+            Or sign in with
+          </div>
 
           {/* Social Buttons */}
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center">
             <button
               onClick={handleGoogleLogin}
-              className="btn bg-white text-black border-[#e5e5e5] w-full rounded-full"
+              className={`btn w-full rounded-full border font-medium transition-colors ${theme === "light" ? "bg-white text-gray-800 border-gray-300 hover:bg-gray-50" : "bg-gray-800 text-white border-gray-600 hover:bg-gray-700"}`}
             >
               <svg
                 aria-label="Google logo"
-                width="16"
-                height="16"
+                width="20"
+                height="20"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >
@@ -144,9 +149,12 @@ const Login = () => {
             </button>
           </div>
 
-          <p className="text-sm font-light text-gray-400 mt-4">
+          <p className={`text-sm font-light mt-6 ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
             Don't have an account?{" "}
-            <Link to={"/register"} className="font-semibold hover:underline">
+            <Link 
+              to={"/register"} 
+              className={`font-semibold hover:underline ${theme === "light" ? "text-blue-600" : "text-blue-400"}`}
+            >
               Register
             </Link>
           </p>

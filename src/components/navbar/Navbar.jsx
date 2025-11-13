@@ -5,6 +5,8 @@ import { Link, NavLink } from "react-router";
 import "./navbar.css";
 import { AuthContext } from "../../authContext/AuthContext";
 import toast from "react-hot-toast";
+import { FaRegistered, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { IoCreateOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const { user, logOut, theme, setTheme } = useContext(AuthContext);
@@ -88,6 +90,46 @@ const Navbar = () => {
           About Us
         </NavLink>
       </li>
+      {!user && (
+        <>
+          <li>
+            <NavLink
+              className={({ isActive }) =>
+                `sm:hidden rounded-full px-4 py-2 transition-colors duration-200 ${
+                  isActive
+                    ? theme === "light"
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-blue-500/20 text-blue-300"
+                    : theme === "light"
+                    ? "hover:bg-gray-100 text-gray-700"
+                    : "hover:bg-gray-800 text-gray-200"
+                }`
+              }
+              to="/Login"
+            >
+              Login
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive }) =>
+                `sm:hidden rounded-full px-4 py-2 transition-colors duration-200 ${
+                  isActive
+                    ? theme === "light"
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-blue-500/20 text-blue-300"
+                    : theme === "light"
+                    ? "hover:bg-gray-100 text-gray-700"
+                    : "hover:bg-gray-800 text-gray-200"
+                }`
+              }
+              to="/Register"
+            >
+              Register
+            </NavLink>
+          </li>
+        </>
+      )}
       {user && (
         <>
           <li>
@@ -109,22 +151,18 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              className={({ isActive }) =>
-                `rounded-full px-4 py-2 transition-colors duration-200 ${
-                  isActive
-                    ? theme === "light"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-blue-500/20 text-blue-300"
-                    : theme === "light"
-                    ? "hover:bg-gray-100 text-gray-700"
-                    : "hover:bg-gray-800 text-gray-200"
-                }`
-              }
-              to="/profile"
+            <Link
+              onClick={handleSignOut}
+              className={`rounded-full px-4 py-2 transition-colors duration-200 
+                     ${
+                       theme === "light"
+                         ? "hover:bg-gray-100 text-gray-700"
+                         : "hover:bg-gray-800 text-gray-200"
+                     }
+                }`}
             >
-              My Profile
-            </NavLink>
+              Logout
+            </Link>
           </li>
         </>
       )}
@@ -145,7 +183,7 @@ const Navbar = () => {
         {/* Navbar Start */}
         <div className="navbar-start w-[20%]">
           {/* Mobile Menu */}
-          <div className="dropdown">
+          <div className="dropdown sm:-ml-0 -ml-4">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +217,11 @@ const Navbar = () => {
             to="/"
             className="text-3xl flex items-end font-bold cursor-pointer -ml-3"
           >
-            <img className="h-10" src={theme ==="light" ? logo2 : logo} alt="logo" />
+            <img
+              className="h-10"
+              src={theme === "light" ? logo2 : logo}
+              alt="logo"
+            />
             <span
               className={`-ml-1.5 ${
                 theme === "light" ? "text-gray-800" : "text-white"
@@ -199,7 +241,7 @@ const Navbar = () => {
           {user ? (
             <button
               onClick={handleSignOut}
-              className={`ml-3 rounded-full px-5 py-2 font-medium transition-colors duration-200 ${
+              className={`hidden sm:block ml-3 rounded-full px-5 py-2 font-medium transition-colors duration-200 ${
                 theme === "light"
                   ? "border border-gray-300 text-gray-700 hover:bg-gray-100"
                   : "border border-gray-600 text-white hover:bg-gray-800"
@@ -208,25 +250,38 @@ const Navbar = () => {
               Logout
             </button>
           ) : (
-            <div className="flex items-center">
+            <div className="hidden sm:flex items-center">
               <NavLink
                 to="/login"
-                className={`rounded-full px-5 py-2 transition-colors duration-200 ${
-                  theme === "light"
-                    ? "border border-gray-300 text-gray-700 hover:bg-gray-100"
-                    : "border border-gray-600 text-white hover:bg-gray-800"
-                }`}
+                className={({ isActive }) =>
+                  `flex gap-2 items-center rounded-full px-4 py-2 transition-colors duration-200 ${
+                    isActive
+                      ? theme === "light"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-blue-500/20 text-blue-300"
+                      : theme === "light"
+                      ? "hover:bg-gray-100 text-gray-700"
+                      : "hover:bg-gray-800 text-gray-200"
+                  }`
+                }
               >
-                Login
+                <FaSignInAlt></FaSignInAlt> Login
               </NavLink>
               <NavLink
                 to="/register"
-                className={`ml-3 rounded-full px-5 py-2 transition-colors duration-200 ${
-                  theme === "light"
-                    ? "border border-blue-300 text-blue-600 hover:bg-blue-50"
-                    : "border border-blue-500 text-blue-400 hover:bg-blue-500/20"
-                }`}
+                className={({ isActive }) =>
+                  `flex gap-2 items-center rounded-full px-4 py-2 transition-colors btn-outline btn ml-2 duration-200 ${
+                    isActive
+                      ? theme === "light"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-blue-500/20 text-blue-300"
+                      : theme === "light"
+                      ? "hover:bg-gray-100 text-gray-700"
+                      : "hover:bg-gray-800 text-gray-200"
+                  }`
+                }
               >
+                <IoCreateOutline />
                 Register
               </NavLink>
             </div>

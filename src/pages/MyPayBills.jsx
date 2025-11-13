@@ -1,15 +1,11 @@
 import React, { useState, useEffect, use, useRef } from "react";
-import {
-  FaDownload,
-  FaEdit,
-  FaTrash,
-  FaReceipt,
-  FaSearch,
-} from "react-icons/fa";
+import { FaDownload, FaEdit, FaTrash, FaReceipt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../authContext/AuthContext";
 import Lottie from "lottie-react";
-import loader from "../assets/load.json"
+import loader from "../assets/load.json";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const MyPayBills = () => {
   const [myBills, setMyBills] = useState([]);
@@ -27,10 +23,10 @@ const MyPayBills = () => {
   // Fetch user's paid bills
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/my-bills?email=${user.email}`,{
-      headers:{
-        authorization : `Bearer ${user.accessToken}`
-      }
+    fetch(`http://localhost:3000/my-bills?email=${user.email}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -136,63 +132,194 @@ const MyPayBills = () => {
       });
   };
 
+  // -------------------------------------------------------------------------------------
+  // Download report as PDF
+  const handleDownloadReport = () => {
+    if (myBills.length === 0) {
+      Swal.fire({
+        title: "No Data",
+        text: "There are no bills to download!",
+        icon: "info",
+      });
+      return;
+    }
+
+    const doc = new jsPDF();
+    const title = "PayConnect - My Paid Bills Report";
+    const dateGenerated = new Date().toLocaleString();
+
+    doc.setFontSize(18);
+    doc.text(title, 14, 20);
+    doc.setFontSize(11);
+    doc.text(`Generated on: ${dateGenerated}`, 14, 28);
+
+    const tableColumn = [
+      "User Name",
+      "Email",
+      "Category",
+      "Amount",
+      "Address",
+      "Phone",
+      "Date",
+    ];
+
+    const tableRows = myBills.map((bill) => [
+      bill.username,
+      bill.email,
+      bill.category,
+      bill.amount,
+      bill.address,
+      bill.phone,
+      bill.date,
+    ]);
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 35,
+      theme: "striped",
+      headStyles: { fillColor: [22, 160, 133] },
+      styles: { fontSize: 9 },
+    });
+
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(12);
+    doc.text(`Total Bills: ${totalBills}`, 14, finalY);
+    doc.text(`Total Amount: ${totalAmount}`, 14, finalY + 8);
+
+    doc.save("My_Paid_Bills_Report.pdf");
+  };
+
+  // -------------------------------------------------------------------------------------
+
   return (
-    <div className={`min-h-screen ${theme === "light" ? "bg-gray-100" : "bg-gradient-to-b from-[#081c15] to-black"} -mt-23 py-28`}>
+    <div
+      className={`min-h-screen ${
+        theme === "light"
+          ? "bg-gray-100"
+          : "bg-gradient-to-b from-[#081c15] to-black"
+      } -mt-23 py-28`}
+    >
       <title>PayConnect | My Pay Bills</title>
       <div className="container mx-auto px-4">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+          <h1
+            className={`text-4xl md:text-5xl font-bold mb-4 ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+          >
             My Paid Bills
           </h1>
-          <p className={`text-lg max-w-2xl mx-auto ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
+          <p
+            className={`text-lg max-w-2xl mx-auto ${
+              theme === "light" ? "text-gray-600" : "text-gray-300"
+            }`}
+          >
             View and manage all your paid utility bills in one place
           </p>
         </div>
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className={`rounded-2xl p-6 shadow-lg border ${theme === "light" ? "bg-white border-blue-100" : "bg-white/20 border-green-900"}`}>
+          <div
+            className={`rounded-2xl p-6 shadow-lg border ${
+              theme === "light"
+                ? "bg-white border-blue-100"
+                : "bg-white/20 border-green-900"
+            }`}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+                <p
+                  className={`text-sm ${
+                    theme === "light" ? "text-gray-500" : "text-gray-400"
+                  }`}
+                >
                   Total Bills Paid
                 </p>
-                <p className={`text-3xl font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+                <p
+                  className={`text-3xl font-bold ${
+                    theme === "light" ? "text-gray-800" : "text-white"
+                  }`}
+                >
                   {totalBills}
                 </p>
               </div>
-              <div className={`p-3 rounded-full ${theme === "light" ? "bg-blue-100" : "bg-blue-900"}`}>
-                <FaReceipt className={`text-2xl ${theme === "light" ? "text-blue-600" : "text-blue-400"}`} />
+              <div
+                className={`p-3 rounded-full ${
+                  theme === "light" ? "bg-blue-100" : "bg-blue-900"
+                }`}
+              >
+                <FaReceipt
+                  className={`text-2xl ${
+                    theme === "light" ? "text-blue-600" : "text-blue-400"
+                  }`}
+                />
               </div>
             </div>
           </div>
 
-          <div className={`rounded-2xl p-6 shadow-lg border ${theme === "light" ? "bg-white border-green-100" : "bg-white/20 border-green-900"}`}>
+          <div
+            className={`rounded-2xl p-6 shadow-lg border ${
+              theme === "light"
+                ? "bg-white border-green-100"
+                : "bg-white/20 border-green-900"
+            }`}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+                <p
+                  className={`text-sm ${
+                    theme === "light" ? "text-gray-500" : "text-gray-400"
+                  }`}
+                >
                   Total Amount Paid
                 </p>
-                <p className={`text-3xl font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+                <p
+                  className={`text-3xl font-bold ${
+                    theme === "light" ? "text-gray-800" : "text-white"
+                  }`}
+                >
                   ৳ {totalAmount}
                 </p>
               </div>
-              <div className={`p-3 px-5 rounded-full ${theme === "light" ? "bg-green-100" : "bg-green-900"}`}>
-                <span className={`text-2xl ${theme === "light" ? "text-green-600" : "text-green-400"}`}>
+              <div
+                className={`p-3 px-5 rounded-full ${
+                  theme === "light" ? "bg-green-100" : "bg-green-900"
+                }`}
+              >
+                <span
+                  className={`text-2xl ${
+                    theme === "light" ? "text-green-600" : "text-green-400"
+                  }`}
+                >
                   ৳
                 </span>
               </div>
             </div>
           </div>
 
-          <div className={`rounded-2xl p-6 shadow-lg border ${theme === "light" ? "bg-white border-purple-100" : "bg-white/20 border-green-900"}`}>
+          <div
+            className={`rounded-2xl p-6 shadow-lg border ${
+              theme === "light"
+                ? "bg-white border-purple-100"
+                : "bg-white/20 border-green-900"
+            }`}
+          >
             <div className="flex justify-between items-center gap-4">
-              <p className={`text-lg ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+              <p
+                className={`text-lg ${
+                  theme === "light" ? "text-gray-500" : "text-gray-400"
+                }`}
+              >
                 Download Report:
               </p>
               {/* Download Report Button */}
-              <button className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200 font-medium">
+              <button
+                onClick={handleDownloadReport}
+                className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200 font-medium"
+              >
                 <FaDownload />
                 Download
               </button>
@@ -201,63 +328,135 @@ const MyPayBills = () => {
         </div>
 
         {/* Bills Table */}
-        <div className={`rounded-2xl shadow-lg overflow-hidden ${theme === "light" ? "bg-white" : "bg-white/10"}`}>
+        <div
+          className={`rounded-2xl shadow-lg overflow-hidden ${
+            theme === "light" ? "bg-white" : "bg-white/10"
+          }`}
+        >
           {
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className={theme === "light" ? "bg-gray-50" : "bg-gray-50/20"}>
+                <thead
+                  className={theme === "light" ? "bg-gray-50" : "bg-gray-50/20"}
+                >
                   <tr>
-                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${
+                        theme === "light" ? "text-gray-500" : "text-gray-300"
+                      }`}
+                    >
                       User Details
                     </th>
-                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${
+                        theme === "light" ? "text-gray-500" : "text-gray-300"
+                      }`}
+                    >
                       <span className="ml-2">Category</span>
                     </th>
-                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${
+                        theme === "light" ? "text-gray-500" : "text-gray-300"
+                      }`}
+                    >
                       Amount
                     </th>
-                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${
+                        theme === "light" ? "text-gray-500" : "text-gray-300"
+                      }`}
+                    >
                       Pay Date
                     </th>
-                    <th className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${theme === "light" ? "text-gray-500" : "text-gray-300"}`}>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${
+                        theme === "light" ? "text-gray-500" : "text-gray-300"
+                      }`}
+                    >
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className={`divide-y ${theme === "light" ? "divide-gray-200" : "divide-gray-600"}`}>
+                <tbody
+                  className={`divide-y ${
+                    theme === "light" ? "divide-gray-200" : "divide-gray-600"
+                  }`}
+                >
                   {myBills.map((bill) => (
                     <tr
                       key={bill.billsId}
-                      className={theme === "light" ? "hover:bg-gray-50 transition-colors" : "hover:bg-green-500/7 transition-colors"}
+                      className={
+                        theme === "light"
+                          ? "hover:bg-gray-50 transition-colors"
+                          : "hover:bg-green-500/7 transition-colors"
+                      }
                     >
                       <td className="px-6 py-4">
                         <div>
-                          <p className={`font-medium ${theme === "light" ? "text-gray-900" : "text-white"}`}>
+                          <p
+                            className={`font-medium ${
+                              theme === "light" ? "text-gray-900" : "text-white"
+                            }`}
+                          >
                             {bill.username}
                           </p>
-                          <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+                          <p
+                            className={`text-sm ${
+                              theme === "light"
+                                ? "text-gray-500"
+                                : "text-gray-400"
+                            }`}
+                          >
                             {bill.email}
                           </p>
-                          <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+                          <p
+                            className={`text-sm ${
+                              theme === "light"
+                                ? "text-gray-500"
+                                : "text-gray-400"
+                            }`}
+                          >
                             {bill.phone}
                           </p>
-                          <p className={`text-sm ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+                          <p
+                            className={`text-sm ${
+                              theme === "light"
+                                ? "text-gray-500"
+                                : "text-gray-400"
+                            }`}
+                          >
                             {bill.address}
                           </p>
                         </div>
                       </td>
                       <td className="px-6 py-4 ">
-                        <span className={`p-2 px-6 text-md rounded-full ${theme === "light" ? "bg-blue-100 text-blue-800" : "bg-primary"}`}>
+                        <span
+                          className={`p-2 px-6 text-md rounded-full ${
+                            theme === "light"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-primary"
+                          }`}
+                        >
                           {bill.category}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <p className={`text-lg font-semibold ${theme === "light" ? "text-gray-900" : "text-white"}`}>
+                        <p
+                          className={`text-lg font-semibold ${
+                            theme === "light" ? "text-gray-900" : "text-white"
+                          }`}
+                        >
                           ৳ {bill.amount}
                         </p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className={`text-md ${theme === "light" ? "text-gray-500" : "text-gray-400"}`}>
+                        <p
+                          className={`text-md ${
+                            theme === "light"
+                              ? "text-gray-500"
+                              : "text-gray-400"
+                          }`}
+                        >
                           {bill.date}
                         </p>
                       </td>
@@ -290,12 +489,28 @@ const MyPayBills = () => {
 
       {/* Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className={`modal-box ${theme === "light" ? "bg-white" : "bg-gradient-to-tl from-[#081c15] to-[#102c00]/50"}`}>
-          <h2 className={`text-4xl text-center py-3 font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+        <div
+          className={`modal-box ${
+            theme === "light"
+              ? "bg-white"
+              : "bg-gradient-to-tl from-[#081c15] to-[#102c00]/50"
+          }`}
+        >
+          <h2
+            className={`text-4xl text-center py-3 font-bold ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+          >
             Update Bill Details
           </h2>
           <form onSubmit={handleUpdateData} className="space-y-3 w-full">
-            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+            <label
+              className={`border-b py-3 flex items-center gap-2 ${
+                theme === "light"
+                  ? "text-gray-600 border-gray-300"
+                  : "text-gray-400 border-gray-500"
+              }`}
+            >
               Amount (Taka)<span className="text-error -ml-1">*</span>:
               <input
                 name="amount"
@@ -311,12 +526,20 @@ const MyPayBills = () => {
                   }
                 }}
                 placeholder="Enter Amount"
-                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
+                className={`grow bg-none outline-none ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
                 required
               />
             </label>
 
-            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+            <label
+              className={`border-b py-3 flex items-center gap-2 ${
+                theme === "light"
+                  ? "text-gray-600 border-gray-300"
+                  : "text-gray-400 border-gray-500"
+              }`}
+            >
               Address<span className="text-error -ml-1">*</span>:
               <input
                 name="address"
@@ -329,12 +552,20 @@ const MyPayBills = () => {
                   })
                 }
                 placeholder="Enter Your Address"
-                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
+                className={`grow bg-none outline-none ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
                 required
               />
             </label>
 
-            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+            <label
+              className={`border-b py-3 flex items-center gap-2 ${
+                theme === "light"
+                  ? "text-gray-600 border-gray-300"
+                  : "text-gray-400 border-gray-500"
+              }`}
+            >
               Phone<span className="text-error -ml-1">*</span>:
               <input
                 name="phone"
@@ -347,12 +578,20 @@ const MyPayBills = () => {
                   })
                 }
                 placeholder="Enter Your Phone Number"
-                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
+                className={`grow bg-none outline-none ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
                 required
               />
             </label>
 
-            <label className={`border-b py-3 flex items-center gap-2 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+            <label
+              className={`border-b py-3 flex items-center gap-2 ${
+                theme === "light"
+                  ? "text-gray-600 border-gray-300"
+                  : "text-gray-400 border-gray-500"
+              }`}
+            >
               Date:<span className="text-error -ml-1">*</span>
               <input
                 name="date"
@@ -364,7 +603,9 @@ const MyPayBills = () => {
                     date: e.target.value,
                   })
                 }
-                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
+                className={`grow bg-none outline-none ${
+                  theme === "light" ? "text-gray-800" : "text-white"
+                }`}
                 required
               />
             </label>

@@ -91,7 +91,7 @@ const Banner = () => {
   };
 
   return (
-    <section className={`w-full h-screen relative ${theme === "light"? "bg-white text-black" : "bg-black text-white"} mb-5 overflow-hidden -mt-24`}>
+    <section className={`w-full h-screen relative ${theme === "light"? "bg-gray-100 text-black" : "bg-black text-white"} mb-5 overflow-hidden -mt-24`}>
       {theme === "light" ? (
         ""
       ) : (
@@ -103,17 +103,17 @@ const Banner = () => {
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
-            // autoplay={{
-            //   delay: 2500,
-            //   disableOnInteraction: false,
-            // }}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
            
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper w-full h-full"
           >
             <SwiperSlide>
-              <div className="flex flex-col-reverse lg:flex-row justify-between items-center pt-40 lg:pt-50 h-full w-4/5 lg:w-full container mx-auto px-4 lg:px-30  py-20 lg:py-0">
-                <div className="w-full  lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0">
+              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center lg:pt-50  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
+                <div className="w-full lg:w-1/2 text-center lg:text-left lg:mb-0">
                   <h1 className="text-4xl sm:text-4xl lg:text-6xl font-black mb-5">
                     Manage All Your Utility Bills in One Place
                   </h1>
@@ -127,14 +127,14 @@ const Banner = () => {
                     </button>
                   </StyledWrapper>
                 </div>
-                <div className="w-full  lg:w-1/2 flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
+                <div className="hidden w-full  lg:w-1/2 sm:flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
                   <img className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[400px]" src={payBill} alt="" />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex flex-col-reverse lg:flex-row justify-between items-center pt-40 lg:pt-50 h-full w-4/5 lg:w-full container mx-auto px-4 lg:px-30  py-20 lg:py-0">
-                <div className="w-full  lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0">
+              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center lg:pt-50  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
+                <div className="w-full lg:w-1/2 text-center lg:text-left lg:mb-0">
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black mb-5">
                     Bill Management Made Easy
                   </h1>
@@ -145,14 +145,14 @@ const Banner = () => {
                     </button>
                   </StyledWrapper>
                 </div>
-                <div className="w-full  lg:w-1/2 flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
+                <div className="hidden w-full  lg:w-1/2 sm:flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
                   <img className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px]" src={easy} alt="" />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex flex-col-reverse lg:flex-row justify-between items-center pt-40 lg:pt-50 h-full w-4/5 lg:w-full container mx-auto px-4 lg:px-30  py-20 lg:py-0">
-                <div className="w-full  lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0">
+              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center lg:pt-50  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
+                <div className="w-full lg:w-1/2 text-center lg:text-left lg:mb-0">
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black mb-5">
                     Secure and Reliable Bill Tracking
                   </h1>
@@ -166,7 +166,7 @@ const Banner = () => {
                     </button>
                   </StyledWrapper>
                 </div>
-                <div className="w-full  lg:w-1/2 flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
+                <div className="hidden w-full  lg:w-1/2 sm:flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
                   <img className="w-full max-w-[250px] sm:max-w-[350px] lg:max-w-[400px]" src={secure} alt="" />
                 </div>
               </div>
