@@ -153,7 +153,7 @@ const Navbar = () => {
           <li>
             <Link
               onClick={handleSignOut}
-              className={`rounded-full px-4 py-2 transition-colors duration-200 
+              className={`sm:hidden rounded-full px-4 py-2 transition-colors duration-200 
                      ${
                        theme === "light"
                          ? "hover:bg-gray-100 text-gray-700"
@@ -172,7 +172,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-100 pt-5 px-4 sm:px-0">
       <div
-        className={`navbar container mx-auto px-4 rounded-full transition-all duration-300 ease-in-out ${
+        className={`navbar container mx-auto px-4 sm:pl-7 rounded-full transition-all duration-300 ease-in-out ${
           isScrolled
             ? theme === "light"
               ? "bg-white/60 backdrop-blur-md border border-gray-200 shadow-md"
@@ -190,7 +190,7 @@ const Navbar = () => {
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
+                stroke={theme ==="light" ? "gray" : "white"}
               >
                 <path
                   strokeLinecap="round"

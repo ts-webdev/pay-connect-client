@@ -8,7 +8,7 @@ const Review = () => {
   const {theme} = use(AuthContext)
   return (
     <div className={theme === "light"? "bg-[#245501]" : ""}>
-      <div className="container mx-auto py-28">
+      <div className="container px-4 sm:px-0 text-center mx-auto py-28">
         <div className="flex justify-center">
           <h2 className={`text-2xl  py-2 px-6 rounded-full bg-[#245501] ${theme === "light"? "border-white border": ""} text-white`}>
            Trusted by Thousands

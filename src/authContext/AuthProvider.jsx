@@ -15,9 +15,14 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  
+  
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme || "dark";
+  });
 
-  // get theme from local storage
+  // get theme from local storage and apply to HTML
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
@@ -36,23 +41,23 @@ const AuthProvider = ({ children }) => {
   };
 
   // Update User
-  const updateUser = (userData)=>{
-    setLoading(true)
-    return updateProfile(auth.currentUser, userData)
-  }
+  const updateUser = (userData) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, userData);
+  };
 
-  //   Login with Google function can be added here
+  // Login with Google function can be added here
   const loginWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
-  //   signout function can be added here
+  // signout function can be added here
   const logOut = () => {
     return signOut(auth);
   };
 
-  //   observer for user auth state change can be added here
+  // observer for user auth state change can be added here
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -73,7 +78,8 @@ const AuthProvider = ({ children }) => {
     theme,
     setTheme,
   };
-  return <AuthContext value={authData}>{children}</AuthContext>;
+  
+  return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

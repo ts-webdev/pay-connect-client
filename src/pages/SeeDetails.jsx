@@ -86,7 +86,7 @@ const SeeDetails = () => {
   const modalRef = useRef(null);
   const [data, setData] = useState([]);
   const [isCurrentMonth, setIsCurrentMonth] = useState(true);
-  const {user} = use(AuthContext)
+  const { user, theme } = use(AuthContext);
 
   // modal
   const handlePayBill = () => {
@@ -140,194 +140,239 @@ const SeeDetails = () => {
           toast.success("Payment Successful! 🎉");
           modalRef.current.close();
         }
+        if(data.message === "Already Exist"){
+          toast('Already Paid, Check On My Pay Bills Page', {
+  icon: 'ℹ️',
+});
+        }
       });
   };
 
   return (
-    <div className="bg-linear-to-b from-[#081c15] to-black ">
+    <div className={`min-h-screen -mt-24 ${theme === "light" ? "bg-gradient-to-br from-blue-50 to-indigo-100" : "bg-gradient-to-b from-[#081c15] to-black"}`}>
       <title>{`PayConnect | ${data.title}`}</title>
-      <div className="-mt-24 pt-35 pb-28 container mx-auto">
-        <div className="flex items-center gap-3">
-          <Link className="hover:text-gray-300" to={"/"}>
+      <div className="pt-32 pb-20 container mx-auto px-4">
+        {/* Breadcrumb */}
+        <div className={`flex items-center gap-2 text-sm ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
+          <Link className="hover:text-blue-600 transition-colors" to={"/"}>
             Home
           </Link>
           <IoIosArrowForward />
-          <Link className="hover:text-gray-300" to={"/bills"}>
+          <Link className="hover:text-blue-600 transition-colors" to={"/bills"}>
             Bills
           </Link>
           <IoIosArrowForward />
-          <Link className="font-bold" to={"/see-details"}>
+          <span className={`font-medium ${theme === "light" ? "text-gray-800" : "text-white"}`}>
             Bill Details
-          </Link>
+          </span>
         </div>
 
-        <div className="card bg-black/20 shadow-md border mx-auto mt-10 p-10">
-          <div className="flex">
+        {/* Main Card */}
+        <div className={`rounded-2xl shadow-lg border mt-8 p-6 ${theme === "light" ? "bg-white border-gray-200" : "bg-gray-800/50 border-gray-700"}`}>
+          <div className="flex flex-col lg:flex-row gap-8">
             {/* Left side Image */}
-            <div className="w-100 h-60 rounded-2xl bg-white">
-              <img className="rounded-2xl" src={data.image} alt="" />
+            <div className="w-full lg:w-1/3">
+              <img 
+                className="w-full h-64 lg:h-80 object-cover rounded-2xl" 
+                src={data.image} 
+                alt={data.title} 
+              />
             </div>
 
             {/* Right Side Details */}
-            <div className="card-body">
-              <div className="flex justify-between items-start">
-                <div className="flex items-center gap-3">
-                  <div>
-                    <h2 className="card-title text-5xl font-bold">
-                      {data.title}
-                    </h2>
-                    <p className="text-lg mt-3 text-success">{data.category}</p>
-                  </div>
-                </div>
-
-                <div className="badge badge-success badge-outline px-4 py-2 text-sm font-semibold">
-                  Paid
-                </div>
-              </div>
-              <h3 className="font-semibold text-gray-500 ">
-                Bill Information:
-              </h3>
-              <div className="flex items-center gap-2">
-                <p>
-                  <span className="font-bold text-lg">
-                    <span className="mr-2">৳</span>
-                    {data.amount}
+            <div className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                <div className="flex-1">
+                  <h2 className={`text-3xl sm:text-4xl font-bold mb-3 ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+                    {data.title}
+                  </h2>
+                  <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${
+                    theme === "light" 
+                      ? "bg-green-100 text-green-800" 
+                      : "bg-green-900/30 text-green-300"
+                  }`}>
+                    {data.category}
                   </span>
-                </p>
+                </div>
+
+                <div className={`badge px-4 py-3 text-sm font-semibold ${
+                  theme === "light" 
+                    ? "badge-success badge-outline" 
+                    : "bg-green-900/30 text-green-300 border-green-700"
+                }`}>
+                  Active
+                </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                <FaCalendarAlt className="text-gray-500" />
-                <p>
-                  Due Date: <span className="font-medium">{data.date}</span>
-                </p>
-              </div>
+              <div className="mt-6 space-y-4">
+                <h3 className={`font-semibold ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
+                  Bill Information:
+                </h3>
+                
+                <div className="flex items-center gap-3">
+                  <FaDollarSign className={theme === "light" ? "text-gray-500" : "text-gray-400"} />
+                  <p className={theme === "light" ? "text-gray-800" : "text-white"}>
+                    <span className="font-bold text-xl">
+                      ৳{data.amount}
+                    </span>
+                  </p>
+                </div>
 
-              <div className="flex items-center gap-2">
-                <FaMapMarkerAlt className="text-gray-500" />
-                <p>
-                  Service Location:{" "}
-                  <span className="font-medium">{data.location}</span>
-                </p>
+                <div className="flex items-center gap-3">
+                  <FaCalendarAlt className={theme === "light" ? "text-gray-500" : "text-gray-400"} />
+                  <p className={theme === "light" ? "text-gray-700" : "text-gray-300"}>
+                    Due Date: <span className="font-medium">{data.date}</span>
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <FaMapMarkerAlt className={theme === "light" ? "text-gray-500" : "text-gray-400"} />
+                  <p className={theme === "light" ? "text-gray-700" : "text-gray-300"}>
+                    Location: <span className="font-medium">{data.location}</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Description Section */}
-          <div>
-            <div className="space-y-3 text-sm mt-5">
-              <h3 className="font-semibold text-gray-500 ">Description:</h3>
-              <p className="text-gray-300">{data.description}</p>
-            </div>
+          <div className="mt-8">
+            <h3 className={`font-semibold mb-3 ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
+              Description:
+            </h3>
+            <p className={`leading-relaxed ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}>
+              {data.description}
+            </p>
+            
             {/* Pay Bill Button */}
-            <div className="flex justify-end mt-5">
+            <div className="flex justify-end mt-8">
               <StyledWrapper>
                 {isCurrentMonth ? (
                   <button onClick={handlePayBill} className="button">
                     <p>Pay Bill</p>
                   </button>
                 ) : (
-                  <button className="btn btn-primary btn-disabled px-9">
+                  <button 
+                    className={`btn px-8 py-3 rounded-lg ${
+                      theme === "light" 
+                        ? "btn-disabled bg-gray-300 text-gray-500" 
+                        : "btn-disabled bg-gray-700 text-gray-400"
+                    }`}
+                    disabled
+                  >
                     Pay Bill
                   </button>
                 )}
               </StyledWrapper>
             </div>
-            {isCurrentMonth || (
-              <p className="text-center text-error">
+            
+            {!isCurrentMonth && (
+              <p className={`text-center mt-3 ${theme === "light" ? "text-red-600" : "text-red-400"}`}>
                 Note: Only current month bills can be paid.
               </p>
             )}
           </div>
         </div>
       </div>
+
       {/* Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box bg-linear-to-tl from-[#081c15] to-[#102c00]/50">
-        <h2 className="text-4xl text-center py-3 font-bold">Let’s Settle This Bill!</h2>
-          <form onSubmit={handlePayNow} className="space-y-3  w-full">
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+        <div className={`modal-box ${theme === "light" ? "bg-white" : "bg-gradient-to-tl from-[#081c15] to-[#102c00]/50"}`}>
+          <h2 className={`text-3xl sm:text-4xl text-center py-3 font-bold ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+            Let's Settle This Bill!
+          </h2>
+          
+          <form onSubmit={handlePayNow} className="space-y-4 w-full">
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Email:
               <input
                 name="email"
                 type="email"
-                defaultValue={user.email}
-                className="grow bg-none outline-none text-white"
+                defaultValue={user?.email}
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 readOnly
               />
             </label>
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Bill ID:
               <input
                 name="billId"
                 type="text"
                 defaultValue={data._id}
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 readOnly
               />
             </label>
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Amount (Taka):
               <input
                 name="amount"
                 type="number"
                 defaultValue={data.amount}
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 readOnly
               />
             </label>
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
-              Username<span className="text-error -ml-1">*</span>:
+            
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+              Username<span className="text-red-500">*</span>:
               <input
                 name="userName"
                 type="text"
                 placeholder="Enter Your Username"
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800 placeholder-gray-400" : "text-white placeholder-gray-400"}`}
                 required
               />
             </label>
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
-              Address<span className="text-error -ml-1">*</span>:
+            
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+              Address<span className="text-red-500">*</span>:
               <input
                 name="address"
                 type="text"
                 placeholder="Enter Your Address"
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800 placeholder-gray-400" : "text-white placeholder-gray-400"}`}
                 required
               />
             </label>
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
-              Phone<span className="text-error -ml-1">*</span>:
+            
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
+              Phone<span className="text-red-500">*</span>:
               <input
                 name="phone"
                 type="number"
                 placeholder="Enter Your Phone Number"
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800 placeholder-gray-400" : "text-white placeholder-gray-400"}`}
                 required
               />
             </label>
-            <label className="text-gray-400 border-b border-gray-500 py-3 flex items-center gap-2">
+            
+            <label className={`border-b py-3 flex items-center gap-3 ${theme === "light" ? "text-gray-600 border-gray-300" : "text-gray-400 border-gray-500"}`}>
               Date:
               <input
                 name="date"
                 type="text"
                 defaultValue={new Date().toLocaleDateString()}
-                className="grow bg-none outline-none text-white"
+                className={`grow bg-none outline-none ${theme === "light" ? "text-gray-800" : "text-white"}`}
                 readOnly
               />
             </label>
 
             <button
               type="submit"
-              className="btn w-full btn-primary text-white  rounded-sm font-semibold mt-2"
+              className="btn w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold py-3 mt-4"
             >
               Pay Now
             </button>
           </form>
-          <div className="modal-action">
+          
+          <div className="modal-action mt-6">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn bg-primary">Cancel</button>
+              <button className={`btn ${theme === "light" ? "bg-gray-500 hover:bg-gray-600" : "bg-gray-700 hover:bg-gray-600"} text-white`}>
+                Cancel
+              </button>
             </form>
           </div>
         </div>

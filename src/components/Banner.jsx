@@ -91,12 +91,12 @@ const Banner = () => {
   };
 
   return (
-    <section className={`w-full h-screen relative ${theme === "light"? "bg-gray-100 text-black" : "bg-black text-white"} mb-5 overflow-hidden -mt-24`}>
-      {theme === "light" ? (
-        ""
-      ) : (
-        <DotBackground></DotBackground>
-      )}
+    <section
+      className={`w-full h-screen relative ${
+        theme === "light" ? "bg-gray-100 text-black" : "bg-black text-white"
+      } mb-5 overflow-hidden -mt-24`}
+    >
+      {theme === "light" ? "" : <DotBackground></DotBackground>}
 
       <div className="absolute inset-0">
         <div>
@@ -107,12 +107,11 @@ const Banner = () => {
               delay: 2000,
               disableOnInteraction: false,
             }}
-           
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper w-full h-full"
           >
             <SwiperSlide>
-              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center lg:pt-50  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
+              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
                 <div className="w-full lg:w-1/2 text-center lg:text-left lg:mb-0">
                   <h1 className="text-4xl sm:text-4xl lg:text-6xl font-black mb-5">
                     Manage All Your Utility Bills in One Place
@@ -121,37 +120,59 @@ const Banner = () => {
                     Simplify your monthly payments with our comprehensive bill
                     management system
                   </p>
-                  <StyledWrapper className="mt-5 flex justify-center lg:justify-start">
-                    <button onClick={handleAllBills} className="button">
-                      <p>All Bills</p>
-                    </button>
-                  </StyledWrapper>
+                  {theme === "light" ? (
+                    <button  onClick={handleAllBills} className="btn btn-success mt-5"> All Bills</button>
+                  ) : (
+                    <StyledWrapper className="mt-5 flex justify-center lg:justify-start">
+                      <button onClick={handleAllBills} className="button">
+                        <p>All Bills</p>
+                      </button>
+                    </StyledWrapper>
+                  )}
                 </div>
                 <div className="hidden w-full  lg:w-1/2 sm:flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
-                  <img className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[400px]" src={payBill} alt="" />
+                  <img
+                    className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[400px]"
+                    src={payBill}
+                    alt=""
+                  />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center lg:pt-50  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
+              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center w-full lg:w-full container mx-auto px-4 lg:px-30  ">
                 <div className="w-full lg:w-1/2 text-center lg:text-left lg:mb-0">
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black mb-5">
                     Bill Management Made Easy
                   </h1>
-                  <p className="text-sm sm:text-base lg:text-lg">One Place for Electricity, Gas, Water, and Internet.</p>
-                  <StyledWrapper onClick={handleAboutButton} className="mt-5 flex justify-center lg:justify-start">
+                  <p className="text-sm sm:text-base lg:text-lg">
+                    One Place for Electricity, Gas, Water, and Internet.
+                  </p>
+                  {theme === "light" ? (
+                    <button   onClick={handleAboutButton} className="btn btn-success mt-5"> About Us</button>
+                  ) : (
+                    <StyledWrapper
+                    onClick={handleAboutButton}
+                    className="mt-5 flex justify-center lg:justify-start"
+                  >
                     <button className="button">
                       <p>About Us</p>
                     </button>
                   </StyledWrapper>
+                  )}
+                  
                 </div>
                 <div className="hidden w-full  lg:w-1/2 sm:flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
-                  <img className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px]" src={easy} alt="" />
+                  <img
+                    className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px]"
+                    src={easy}
+                    alt=""
+                  />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center lg:pt-50  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
+              <div className="flex lg:flex-row sm:justify-between justify-center h-screen pt-24 items-center  w-full lg:w-full container mx-auto px-4 lg:px-30  ">
                 <div className="w-full lg:w-1/2 text-center lg:text-left lg:mb-0">
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black mb-5">
                     Secure and Reliable Bill Tracking
@@ -160,14 +181,26 @@ const Banner = () => {
                     Your financial data is protected with enterprise-grade
                     security
                   </p>
-                  <StyledWrapper onClick={handleAboutButton} className="mt-5 flex justify-center lg:justify-start">
+                  {theme === "light" ? (
+                    <button  onClick={handleAboutButton} className="btn btn-success mt-5"> Learn More</button>
+                  ) : (
+                    <StyledWrapper
+                    onClick={handleAboutButton}
+                    className="mt-5 flex justify-center lg:justify-start"
+                  >
                     <button className="button">
                       <p>Learn More</p>
                     </button>
                   </StyledWrapper>
+                  )}
+                  
                 </div>
                 <div className="hidden w-full  lg:w-1/2 sm:flex justify-center animate-bounce slow-bounce mt-10 lg:mt-40 lg:-mr-30">
-                  <img className="w-full max-w-[250px] sm:max-w-[350px] lg:max-w-[400px]" src={secure} alt="" />
+                  <img
+                    className="w-full max-w-[250px] sm:max-w-[350px] lg:max-w-[400px]"
+                    src={secure}
+                    alt=""
+                  />
                 </div>
               </div>
             </SwiperSlide>
